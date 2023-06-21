@@ -5,7 +5,7 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { Box, Typography } from '@mui/material'
 import Container from '../../../../components/Container'
-import { MintButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../form/formElements'
+import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../form/formElements'
 import { useContractWrite, useWaitForTransaction } from 'wagmi'
 import {
   UnstakePreparedContract,
@@ -194,13 +194,13 @@ export default function StakeTable({ address }: StakeTableProps) {
                 </Typography>
                 {hasRewards && (
                   <Box display="flex" justifyContent="center" alignItems="center" margin={2}>
-                    <MintButton
+                    <MainButton
                       disabled={!claimRewardsWrite || claimRewardsIsLoading}
                       onClick={() => claimRewardsWrite?.()}
                       variant="contained"
                     >
                       Claim Rewards
-                    </MintButton>
+                    </MainButton>
                   </Box>
                 )}
                 <Table size="small" aria-label="a dense table">

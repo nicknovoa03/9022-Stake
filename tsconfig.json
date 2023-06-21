@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/form/mint.ts", "src/views/Staking/components/table/StakeTable.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/form/mint.ts", "src/views/AmbassadorPool1/components/table/StakeTable.jsx"],
   "exclude": ["node_modules"]
 }
