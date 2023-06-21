@@ -1,25 +1,25 @@
 import { useEffect, useState } from 'react'
 import { Box, Typography, Link, Grid, Divider } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import Main from '../../layouts/Main'
-import Container from '../../components/Container'
+import Main from '../../../layouts/Main'
+import Container from '../../../components/Container'
 import { BigNumber, ethers } from 'ethers'
 import { Web3Button } from '@web3modal/react'
 import { useAccount, useContractWrite, useWaitForTransaction } from 'wagmi'
-import { StakeAmountField, MintButton } from './components/form/formElements'
-import IAiLogo from './components/logos/IAiLogo'
-import theme from '../../theme'
-import StakeTable from './components/table/StakeTable'
-import { ContractAddress, WalletAddress } from './components/form/stakeElements'
+import { StakeAmountField, MintButton } from '../components/form/formElements'
+import IAiLogo from '../components/logos/IAiLogo'
+import theme from '../../../theme'
+import StakeTable from '../components/table/StakeTable'
+import { ContractAddress, WalletAddress } from '../components/form/stakeElements'
 import {
   ERC20Allowance,
   ERC20BalanceOf,
   ERC20PreparedContractApprove,
   StakePreparedContract,
   StakingContractAddress
-} from './components/contracts/wagmiContracts'
+} from '../components/contracts/wagmiContracts'
 
-function MintForm() {
+function AmbassadorPool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0')
   let [balanceSet, setBalance] = useState(false)
   let [balanceAmount, setBalanceAmount] = useState<BigNumber>(BigNumber.from(0))
@@ -110,7 +110,7 @@ function MintForm() {
   }
 
   return (
-    <Main>
+    <>
       <Container>
         <Box display="flex" flexDirection={'column'} alignItems={'center'} data-aos={'fade-in'}>
           <Box
@@ -273,8 +273,8 @@ function MintForm() {
         </Box>
       </Container>
       <StakeTable address={address} />
-    </Main>
+    </>
   )
 }
 
-export default MintForm
+export default AmbassadorPool1
