@@ -128,8 +128,8 @@ function StakingConsole() {
                 <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 1" size={4} />
                 <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 2" size={4} />
                 <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 3" size={4} />
-                <PoolSelectionBox href="/Pool1" poolName="Prestige Ambassador" size={4} />
-                <PoolSelectionBox href="/Pool1" poolName="Destination Inheritance Ambassador" size={4} />
+                <PoolSelectionBox href="/Pool1" poolName="Prestige Ambassador" size={6} />
+                <PoolSelectionBox href="/Pool1" poolName="Destination Inheritance Ambassador" size={6} />
               </Grid>
             </Box>
           </Box>

@@ -16,11 +16,8 @@ const PoolSelectionBox: React.FC<PoolSelectionButtonProps> = ({ href, poolName, 
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,.9);',
-          px: 5,
-          py: 3,
+          backgroundColor: 'rgba(0,0,0,.4);',
           borderRadius: 3,
-          border: '1px solid white'
         }}
       >
         <PoolSelectionButton href={href}>{poolName}</PoolSelectionButton>
