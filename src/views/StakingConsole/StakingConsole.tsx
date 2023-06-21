@@ -5,12 +5,13 @@ import { grey } from '@mui/material/colors'
 import { Web3Button } from '@web3modal/react'
 import { ethers } from 'ethers'
 import theme from '../../theme'
-import { StakeAmountField, MainButton } from '../AmbassadorPool1/components/form/formElements'
+import { StakeAmountField, MainButton, PoolSelectionButton } from '../AmbassadorPool1/components/form/formElements'
 import { ContractAddress, WalletAddress } from '../AmbassadorPool1/components/form/stakeElements'
 import IAiLogo from '../AmbassadorPool1/components/logos/IAiLogo'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import Container from '../../components/Container'
+import PoolSelectionBox from './components/poolSelection/poolSelection'
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>()
@@ -124,86 +125,11 @@ function StakingConsole() {
             </Box>
             <Box>
               <Grid container spacing={5} justifyContent={'center'}>
-                <Grid item lg={4}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0,0,.9);',
-                      px: 5,
-                      py: 3,
-                      borderRadius: 3,
-                      border: '1px solid white'
-                    }}
-                  >
-                    <MainButton href="/Pool1">Ambassador Pool 1</MainButton>{' '}
-                  </Box>
-                </Grid>
-                <Grid item lg={4}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0,0,.9);',
-                      px: 5,
-                      py: 3,
-                      borderRadius: 3,
-                      border: '1px solid white'
-                    }}
-                  >
-                    <MainButton>Ambassador Pool 2</MainButton>{' '}
-                  </Box>
-                </Grid>
-                <Grid item lg={4}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0,0,.9);',
-                      px: 5,
-                      py: 3,
-                      borderRadius: 3,
-                      border: '1px solid white'
-                    }}
-                  >
-                    <MainButton>Ambassador Pool 3</MainButton>{' '}
-                  </Box>
-                </Grid>
-                <Grid item lg={6}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0,0,.9);',
-                      px: 5,
-                      py: 3,
-                      borderRadius: 3,
-                      border: '1px solid white'
-                    }}
-                  >
-                    <MainButton>Prestige Ambassador</MainButton>{' '}
-                  </Box>
-                </Grid>
-                <Grid item lg={6}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(0,0,0,.9);',
-                      px: 5,
-                      py: 3,
-                      borderRadius: 3,
-                      border: '1px solid white'
-                    }}
-                  >
-                    <MainButton>Destination Inheritance Ambassador</MainButton>{' '}
-                  </Box>
-                </Grid>
+                <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 1" size={4} />
+                <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 2" size={4} />
+                <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 3" size={4} />
+                <PoolSelectionBox href="/Pool1" poolName="Prestige Ambassador" size={4} />
+                <PoolSelectionBox href="/Pool1" poolName="Destination Inheritance Ambassador" size={4} />
               </Grid>
             </Box>
           </Box>

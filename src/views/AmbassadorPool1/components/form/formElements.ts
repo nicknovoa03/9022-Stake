@@ -1,12 +1,30 @@
 import { Button, Link, TableCell, TableContainer, TextField, styled } from '@mui/material'
 import { blue, grey } from '@mui/material/colors'
 
-const TruthGPTLogoColor = "#4169e1"
+const IALogoColor = "gold"
 
 export const AddressLink = styled(Link)({
     color: blue[50],
     '&.MuiLink-underlineHover': {
         color: grey[500]
+    }
+})
+
+export const PoolSelectionButton = styled(Button)({
+    fontSize: 16,
+    border: '2px solid',
+    'textAlign': 'center',
+    '&.MuiButton-root': {
+        color: grey[50],
+        backgroundColor: grey[900],
+    },
+    '&:hover': {
+        backgroundColor: grey[50],
+        color: grey[900]
+    },
+    '&:active': {
+        backgroundColor: IALogoColor,
+        color: grey[900]
     }
 })
 
@@ -20,7 +38,7 @@ export const MainButton = styled(Button)({
     borderRadius: 30,
     '&.MuiButton-root': {
         boxShadow: blue[50],
-        backgroundColor: TruthGPTLogoColor,
+        backgroundColor: blue[400],
         borderColor: blue[700],
         color: blue[50]
     },
@@ -51,7 +69,7 @@ export const WithDrawButton = styled(Button)({
         color: grey[50]
     },
     '&:active': {
-        backgroundColor: TruthGPTLogoColor,
+        backgroundColor: IALogoColor,
         color: grey[50]
     }
 })
@@ -66,7 +84,7 @@ export const UnstakeButton = styled(Button)({
         color: grey[50]
     },
     '&:active': {
-        backgroundColor: TruthGPTLogoColor,
+        backgroundColor: IALogoColor,
         color: grey[50]
     }
 })
