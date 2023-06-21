@@ -11,7 +11,10 @@ export const AddressLink = styled(Link)({
 })
 
 export const PoolSelectionButton = styled(Button)({
-    fontSize: 16,
+    fontSize: 18,
+    margin: "10px",
+    padding: "10px",
+    width: "100%",
     border: '2px solid',
     'textAlign': 'center',
     '&.MuiButton-root': {
