@@ -12,7 +12,7 @@ export const AddressLink = styled(Link)({
 
 
 
-export const MintButton = styled(Button)({
+export const MainButton = styled(Button)({
     fontSize: 18,
     padding: '5px',
     border: '3px solid',
