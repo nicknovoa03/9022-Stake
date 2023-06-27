@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
 import Container from '../../components/Container'
 import PoolSelectionBox from './components/poolSelection/poolSelection'
+import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrimaryColor'
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>()
@@ -60,12 +61,12 @@ function StakingConsole() {
                         fontWeight={'bold'}
                         textTransform="uppercase"
                       >
-                        9022 Staking Console
+                        9022 Ambassador Console
                       </Typography>
                     </Grid>
                     <Grid item sm={12}>
-                      <Typography fontSize={11} align="left" color="white">
-                        Stake $iAi and earn $iAi rewards
+                      <Typography fontSize={10} align="left" color="white">
+                        Earn $iAI rewards for your contributions to the ecosystem
                       </Typography>
                     </Grid>
                   </Grid>
@@ -91,24 +92,17 @@ function StakingConsole() {
                   Information:
                 </Typography>
                 <Typography fontSize={12} align="center" color="white" data-aos={'flip-left'}>
-                  - Inheritance Art will implement 9022 Ambassador OPTIONS
-                  <br /> - The number of NFTs and types/tier held, will determine which Ambassador OPTION an individual
-                  has access to.
-                  <br /> - 9022 Ambassador OPTIONS will give 9022 holders the ability to participate in spreading
-                  awareness and rewarded for their efforts.
+                  - inheritance Art will offer 9022 Ambassador Pools for holders of the 9022 NFT collection
+                  <br /> - Your 9022 NFTs will determine which Ambassador Pools you have access to
+                  <br /> - Ambassador Pools will give 9022 holders the ability to participate in spreading awareness
+                  while being rewarded for their efforts
                   <br />
                 </Typography>
               </Box>
               <Box marginTop={3}>
-                {!connectedAddress ? (
-                  <>
-                    <Web3Button />
-                  </>
-                ) : (
-                  <>
-                    <Web3Button />
-                  </>
-                )}
+                <Box>
+                  <Web3Button balance="show" />
+                </Box>
               </Box>
             </Box>
             <Box marginY={5}>
@@ -124,13 +118,7 @@ function StakingConsole() {
               </Typography>
             </Box>
             <Box>
-              <Grid container spacing={5} justifyContent={'center'}>
-                <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 1" size={4} />
-                <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 2" size={4} />
-                <PoolSelectionBox href="/Pool1" poolName="Ambassador Pool 3" size={4} />
-                <PoolSelectionBox href="/Pool1" poolName="Prestige Ambassador" size={6} />
-                <PoolSelectionBox href="/Pool1" poolName="Destination Inheritance Ambassador" size={6} />
-              </Grid>
+              <PoolOptions />
             </Box>
           </Box>
         </Container>
