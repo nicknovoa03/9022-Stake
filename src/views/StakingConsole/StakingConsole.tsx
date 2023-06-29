@@ -107,7 +107,7 @@ function StakingConsole() {
             </Box>
             <Box marginY={5}>
               <Typography
-                variant="h4"
+                variant="h3"
                 align="center"
                 color="white"
                 fontWeight={'bold'}
