@@ -24,7 +24,7 @@ interface StakeData {
   id: number
   startDate: string
   amount: string
-  interest: string
+  reward: string
   penalty: string
   endDate: string
   stakeComplete: boolean
@@ -190,7 +190,7 @@ export default function StakeTable({ address }: StakeTableProps) {
                   data-aos={'zoom-in'}
                   textTransform="uppercase"
                 >
-                  Personal Staked: {stakingBalance} $Truth
+                  Personal Staked: {stakingBalance} $iAI
                 </Typography>
                 {hasRewards && (
                   <Box display="flex" justifyContent="center" alignItems="center" margin={2}>
@@ -209,7 +209,7 @@ export default function StakeTable({ address }: StakeTableProps) {
                       <StakeCell align="center">ID</StakeCell>
                       <StakeCell align="center">START DATE</StakeCell>
                       <StakeCell align="center">AMOUNT</StakeCell>
-                      <StakeCell align="center">INTEREST</StakeCell>
+                      <StakeCell align="center">REWARD</StakeCell>
                       <StakeCell align="center">PENALTY</StakeCell>
                       <StakeCell align="center">END DATE</StakeCell>
                       <StakeCell align="center"></StakeCell>
@@ -224,7 +224,7 @@ export default function StakeTable({ address }: StakeTableProps) {
                           <StakeCell align="center">{row.id + 1}</StakeCell>
                           <StakeCell align="center">{row.startDate}</StakeCell>
                           <StakeCell align="center">{row.amount}</StakeCell>
-                          <StakeCell align="center">{row.interest + '%'}</StakeCell>
+                          <StakeCell align="center">{row.reward + '%'}</StakeCell>
                           <StakeCell align="center">{row.penalty + '%'}</StakeCell>
                           <StakeCell align="center">{row.endDate}</StakeCell>
                           <StakeCell align="center">

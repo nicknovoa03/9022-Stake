@@ -148,12 +148,12 @@ function AmbassadorPool1() {
                         fontWeight={'bold'}
                         textTransform="uppercase"
                       >
-                        9022 Staking
+                        9022 Ambassador Pool
                       </Typography>
                     </Grid>
                     <Grid item sm={12}>
                       <Typography fontSize={11} align="left" color="white">
-                        Stake $iAi and earn $iAi rewards
+                        Lock $iAi and earn $iAi rewards
                       </Typography>
                     </Grid>
                   </Grid>
@@ -179,7 +179,7 @@ function AmbassadorPool1() {
                   data-aos={'flip-right'}
                   textTransform="uppercase"
                 >
-                  Staking Information:
+                  Ambassador Lock Information:
                 </Typography>
                 <Typography fontSize={12} align="left" color="white" data-aos={'flip-left'}>
                   To stake your $iAi, connect your wall to our staking dapp here, sign the transaction and confirm it in
@@ -203,7 +203,7 @@ function AmbassadorPool1() {
                   <br /> - YEARLY Distribution on iAI THRESHOLD: 2%
                   <br />
                   <br />
-                  After successfully staking, simply return to this page to monitor your staked $iAi.
+                  After successfully locking, simply return to this page to monitor your staked $iAi.
                 </Typography>
               </Box>
               <Box
