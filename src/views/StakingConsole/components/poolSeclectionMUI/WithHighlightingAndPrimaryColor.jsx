@@ -41,7 +41,7 @@ const mock = [
       'THRESHOLD: 100,000 iAI Tokens',
       'Minimum 9022 NFTs Required: 3-10',
       'YEARLY Distribution on iAI THRESHOLD: 5.5%',
-      '.05% will be added to the total distribution for each NFT held >3. Max 9% THE iAI THRESHOLD'
+      '.5% will be added to the total distribution for each NFT held >3. Max 9% iAI THRESHOLD'
     ],
     size: 4,
     href: '/Pool1'
@@ -59,7 +59,7 @@ const mock = [
   {
     title: 'Destination Inheritance Ambassador',
     features: [
-      'THRESHOLD: 500,000 iAI Tokens',
+      'THRESHOLD: 300,000 iAI Tokens',
       '9022 NFTs Required: Destination Inheritance',
       'YEARLY Distribution on iAI THRESHOLD: 12%'
     ],
@@ -75,14 +75,21 @@ const WithHighlightingAndPrimaryColor = () => {
     <Grid container spacing={4}>
       {mock.map((item, i) => (
         <Grid item md={item.size} key={i}>
-          <Box component={Card} height={1} display={'flex'} flexDirection={'column'}>
+          <Box
+            component={Card}
+            height={1}
+            display={'flex'}
+            flexDirection={'column'}
+            bgcolor={theme.palette.common.black}
+            sx={{ borderRadius: 3, border: '1px solid white' }}
+          >
             <CardContent
               sx={{
                 padding: 4
               }}
             >
               <Box marginBottom={4}>
-                <Typography variant={'h4'} align="center">
+                <Typography variant={'h4'} align="center" color={theme.palette.common.white}>
                   <Box component={'span'} fontWeight={600}>
                     {item.title}
                   </Box>
@@ -109,7 +116,7 @@ const WithHighlightingAndPrimaryColor = () => {
                           </svg>
                         </Box>
                       </Box>
-                      <ListItemText primary={feature} />
+                      <ListItemText primary={feature} style={{ color: theme.palette.common.white }} />
                     </Box>
                   </Grid>
                 ))}
