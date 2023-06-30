@@ -38,6 +38,7 @@ function StakingConsole() {
                 borderRadius: 3,
                 border: '1px solid white'
               }}
+              data-aos={'flip-down'}
             >
               <Box
                 sx={{
@@ -45,27 +46,28 @@ function StakingConsole() {
                   flexDirection: 'column',
                   alignItems: 'center'
                 }}
+                maxWidth={{ md: 500 }}
               >
                 <Grid item container justifyContent={'center'} display="flex">
-                  <Grid item container justifyContent={'center'} sm={3} xs={3} marginBottom={-2}>
-                    <Box maxWidth={{ xs: 50, md: 70 }} data-aos={'zoom-in-right'}>
+                  <Grid item container justifyContent={'center'} sm={3} xs={12}>
+                    <Box maxWidth={{ xs: 70, md: 70 }} data-aos={'zoom-in'} marginTop={{ md: 1 }}>
                       <IAiLogo />
                     </Box>
                   </Grid>
-                  <Grid item container sm={9} xs={9} marginTop={{ md: 1 }} data-aos={'zoom-in-left'}>
+                  <Grid item container sm={9} xs={12} marginTop={{ md: 1 }} data-aos={'zoom-in'}>
                     <Grid item sm={12}>
                       <Typography
                         fontSize={22}
-                        align="left"
                         color="white"
                         fontWeight={'bold'}
                         textTransform="uppercase"
+                        align="center"
                       >
                         9022 Ambassador Console
                       </Typography>
                     </Grid>
                     <Grid item sm={12}>
-                      <Typography fontSize={10} align="left" color="white">
+                      <Typography fontSize={10} align="center" color="white">
                         Earn $iAI rewards for your contributions to the ecosystem
                       </Typography>
                     </Grid>
@@ -91,7 +93,7 @@ function StakingConsole() {
                 >
                   Information:
                 </Typography>
-                <Typography fontSize={12} align="center" color="white" data-aos={'flip-left'}>
+                <Typography fontSize={12} align="center" color="white">
                   - inheritance Art will offer 9022 Ambassador Pools for holders of the 9022 NFT collection
                   <br /> - Your 9022 NFTs will determine which Ambassador Pools you have access to
                   <br /> - Ambassador Pools will give 9022 holders the ability to participate in spreading awareness

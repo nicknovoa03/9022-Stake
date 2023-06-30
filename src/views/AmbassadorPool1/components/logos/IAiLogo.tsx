@@ -1,9 +1,8 @@
-import { Box } from '@mui/system'
 import Image from 'next/image'
 import background from '../../../../../public/NFT-image.png'
 
 function IAiLogo() {
-  return <Image alt="Background Image" src={background} quality={50} />
+  return <Image alt="9022 Logo" src={background} quality={100} />
 }
 
 export default IAiLogo

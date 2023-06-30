@@ -82,6 +82,7 @@ const WithHighlightingAndPrimaryColor = () => {
             flexDirection={'column'}
             bgcolor={theme.palette.common.black}
             sx={{ borderRadius: 3, border: '1px solid white' }}
+            data-aos={'flip-left'}
           >
             <CardContent
               sx={{
