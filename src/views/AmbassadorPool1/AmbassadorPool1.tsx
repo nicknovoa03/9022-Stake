@@ -30,7 +30,7 @@ function AmbassadorPool1() {
   let [allowanceSet, setAllowance] = useState(false);
   let [allowanceAmount, setAllowanceAmount] = useState<number>(0);
   let [stakeAmount, setStakeAmount] = useState<BigNumber>(BigNumber.from(0));
-  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | string | undefined>();
+  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
   let [nftMetadata, setNFTMetadata] = useState<string>();
   let { address, isConnected } = useAccount();
   const blockExplorer = 'https://bscscan.com';
