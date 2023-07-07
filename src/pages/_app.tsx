@@ -6,15 +6,14 @@ import Page from '../components/Page';
 import { Web3Modal } from '@web3modal/react';
 import { AppProps } from 'next/app';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { sepolia } from 'wagmi/chains';
+import { sepolia, mainnet } from 'wagmi/chains';
 import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3modal/ethereum';
-import { ThirdwebProvider } from '@thirdweb-dev/react';
 
 // 1. Get projectID at https://cloud.walletconnect.com
 const projectId = '72e247ee043a24a6e5ecfa195061a9fd';
 
 // 2. Configure wagmi client
-const chains = [sepolia];
+const chains = [mainnet];
 const { provider } = configureChains(chains, [walletConnectProvider({ projectId })]);
 const wagmiClient = createClient({
   autoConnect: true,
@@ -35,11 +34,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <WagmiConfig client={wagmiClient}>
-        <ThirdwebProvider>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
-        </ThirdwebProvider>
+        <Page>
+          <Component {...pageProps} />
+        </Page>
       </WagmiConfig>
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </React.Fragment>
