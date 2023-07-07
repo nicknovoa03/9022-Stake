@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <React.Fragment>
       <Head>
-        <title>9022 Staking</title>
+        <title>9022 Rewards</title>
         <meta name="description" content="Decentralized Staking Application" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
