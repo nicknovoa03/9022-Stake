@@ -1,114 +1,132 @@
-import { useEffect, useState } from 'react'
-import { Box, Typography, Link, Grid, Divider } from '@mui/material'
-import { grey } from '@mui/material/colors'
-import Main from '../../layouts/Main'
-import Container from '../../components/Container'
-import { BigNumber, ethers } from 'ethers'
-import { Web3Button } from '@web3modal/react'
-import { useAccount, useContractWrite, useWaitForTransaction } from 'wagmi'
-import { StakeAmountField, MainButton } from './components/form/formElements'
-import IAiLogo from './components/logos/IAiLogo'
-import theme from '../../theme'
-import StakeTable from './components/table/StakeTable'
-import { ContractAddress, WalletAddress } from './components/form/stakeElements'
+import { useEffect, useState } from 'react';
+import { Box, Typography, Link, Grid, Divider } from '@mui/material';
+import { grey } from '@mui/material/colors';
+import Main from '../../layouts/Main';
+import Container from '../../components/Container';
+import { BigNumber, ethers } from 'ethers';
+import { Web3Button } from '@web3modal/react';
+import { useAccount, useContractWrite, useWaitForTransaction } from 'wagmi';
+import { StakeAmountField, MainButton } from './components/form/formElements';
+import IAiLogo from './components/logos/IAiLogo';
+import theme from '../../theme';
+import StakeTable from './components/table/StakeTable';
+import { ContractAddress, WalletAddress } from './components/form/stakeElements';
 import {
   ERC20Allowance,
   ERC20BalanceOf,
   ERC20PreparedContractApprove,
+  ERC721BalanceOf,
   StakePreparedContract,
   StakingContractAddress
-} from './components/contracts/wagmiContracts'
+} from './components/contracts/wagmiContracts';
+import getNFTMetadata from './components/nfts/NFTMetadata';
 
 function AmbassadorPool1() {
-  let [poolBalance, setPoolBalance] = useState<String>('0')
-  let [balanceSet, setBalance] = useState(false)
-  let [balanceAmount, setBalanceAmount] = useState<BigNumber>(BigNumber.from(0))
-  let [allowanceSet, setAllowance] = useState(false)
-  let [allowanceAmount, setAllowanceAmount] = useState<number>(0)
-  let [stakeAmount, setStakeAmount] = useState<BigNumber>(BigNumber.from(0))
-  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>()
-  let { address, isConnected } = useAccount()
-
-  const blockExplorer = 'https://bscscan.com'
+  let [poolBalance, setPoolBalance] = useState<String>('0');
+  let [balanceSet, setBalance] = useState(false);
+  let [balanceAmount, setBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [NFTbalanceSet, setNFTBalance] = useState(false);
+  let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [allowanceSet, setAllowance] = useState(false);
+  let [allowanceAmount, setAllowanceAmount] = useState<number>(0);
+  let [stakeAmount, setStakeAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | string | undefined>();
+  let [nftMetadata, setNFTMetadata] = useState<string>();
+  let { address, isConnected } = useAccount();
+  const blockExplorer = 'https://bscscan.com';
 
   // Approve
   const erc20Config = ERC20PreparedContractApprove({
     tokenAmount: ethers.utils.parseEther((100000000).toString())
-  })
-  const { data: dataERC20Approve, write: writeERC20Approve } = useContractWrite(erc20Config)
+  });
+  const { data: dataERC20Approve, write: writeERC20Approve } = useContractWrite(erc20Config);
 
   const { isLoading: isLoadingERC20Approve } = useWaitForTransaction({
     hash: dataERC20Approve?.hash
-  })
+  });
 
   // Allowance
   const allowanceData = ERC20Allowance({
-    ownerAddress: address
-  })
+    ownerAddress: connectedAddress
+  });
+
+  useEffect(() => {
+    if (allowanceData) {
+      setAllowanceAmount(parseFloat(ethers.utils.formatEther(allowanceData)));
+      if (allowanceAmount > 0) {
+        setAllowance(true);
+      }
+    }
+  }, [allowanceData, allowanceAmount]);
 
   // User Balance
-  const balanceData = ERC20BalanceOf({ ownerAddress: address! })
+  const balanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
+
+  useEffect(() => {
+    if (balanceData) {
+      setBalanceAmount(balanceData);
+      if (Number(ethers.utils.formatEther(balanceAmount)) > 1) {
+        setBalance(true);
+      } else {
+        setBalance(false);
+      }
+    }
+  }, [balanceData, stakeAmount, balanceAmount]);
 
   // Staking
 
   // Pool Balance
-  const poolBalanceData = ERC20BalanceOf({ ownerAddress: StakingContractAddress! })
+  const poolBalanceData = ERC20BalanceOf({ ownerAddress: StakingContractAddress! });
+
+  useEffect(() => {
+    if (poolBalanceData) {
+      setPoolBalance(ethers.utils.formatEther(poolBalanceData));
+    }
+  }, []);
 
   // Stake
   const stakeConfig = StakePreparedContract({
     stakeAmount: stakeAmount
-  })
+  });
 
-  const { data: stakeData, write: stakeWrite } = useContractWrite(stakeConfig)
+  const { data: stakeData, write: stakeWrite } = useContractWrite(stakeConfig);
 
   const { isLoading: stakeIsLoading, isSuccess: stakeIsSuccessful } = useWaitForTransaction({
     hash: stakeData?.hash
-  })
+  });
 
   useEffect(() => {
-    setConnectedAddress(address)
-  }, [isConnected])
+    setConnectedAddress(address);
+  }, [isConnected]);
 
+  // User erc721Balance
+  const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
   useEffect(() => {
-    if (allowanceData) {
-      setAllowanceAmount(parseFloat(ethers.utils.formatEther(allowanceData)))
-      if (allowanceAmount > 0) {
-        setAllowance(true)
-      }
-    }
-  }, [allowanceData, allowanceAmount])
-
-  useEffect(() => {
-    if (poolBalanceData) {
-      setPoolBalance(ethers.utils.formatEther(poolBalanceData))
-    }
-  }, [])
-
-  useEffect(() => {
-    if (balanceData) {
-      setBalanceAmount(balanceData)
-      if (Number(ethers.utils.formatEther(balanceAmount)) > 1) {
-        setBalance(true)
+    if (NFTBalanceData) {
+      setNFTBalanceAmount(NFTBalanceData);
+      if (Number(ethers.utils.formatEther(NFTBalanceData)) > 1) {
+        setNFTBalance(true);
       } else {
-        setBalance(false)
+        setNFTBalance(false);
       }
     }
-  }, [balanceData, stakeAmount, balanceAmount])
+  }, [NFTBalanceData]);
 
   const handleStakeChange = (event: { target: { value: any } }) => {
-    const { value } = event.target
+    const { value } = event.target;
     if (isPositiveFloat(value)) {
-      const stakeAmount = ethers.utils.parseEther(value)
-      setStakeAmount(stakeAmount)
+      const stakeAmount = ethers.utils.parseEther(value);
+      setStakeAmount(stakeAmount);
     } else {
-      setStakeAmount(ethers.BigNumber.from(0))
+      setStakeAmount(ethers.BigNumber.from(0));
     }
-  }
+  };
 
   function isPositiveFloat(value: any) {
-    return /^\d+(\.\d+)?$/.test(value) && Number(value) >= 1
+    return /^\d+(\.\d+)?$/.test(value) && Number(value) >= 1;
   }
 
+  //console.log('NFT DATA:', nftMetadata);
   return (
     <>
       <Main>
@@ -215,10 +233,15 @@ function AmbassadorPool1() {
                 }}
                 data-aos={'zoom-out'}
               >
-                {balanceSet && (
-                  <Typography fontSize={16} sx={{ mb: 1 }} color={grey[100]} textTransform="uppercase">
-                    Balance: {Number(ethers.utils.formatEther(balanceAmount)).toFixed(3)} $iAi
-                  </Typography>
+                {connectedAddress && (
+                  <>
+                    <Typography fontSize={16} sx={{ mb: 1 }} color={grey[100]}>
+                      Balance: {Number(ethers.utils.formatEther(balanceAmount)).toFixed(3)} $iAi
+                    </Typography>
+                    <Typography fontSize={16} sx={{ mb: 2 }} color={grey[100]}>
+                      9022 Held: {Number(NFTBalanceAmount)}
+                    </Typography>
+                  </>
                 )}
                 <Box width={{ sm: 450 }}>
                   <StakeAmountField
@@ -270,7 +293,7 @@ function AmbassadorPool1() {
                     )}
                     <ContractAddress />
                     <Web3Button />
-                    <WalletAddress address={address!} />
+                    <WalletAddress address={connectedAddress} />
                   </>
                 ) : (
                   <>
@@ -281,13 +304,20 @@ function AmbassadorPool1() {
               <Typography align="center" fontSize={22} sx={{ mt: 3 }} color={grey[100]} textTransform="uppercase">
                 Pool Balance: {Number(poolBalance).toLocaleString('en-US')} $iAi
               </Typography>
+              <MainButton
+                fullWidth
+                onClick={() => getNFTMetadata('0x69254608f6349b6A6EefF53C1ab3c009699514Ea')}
+                variant="contained"
+              >
+                {'TEST.'}
+              </MainButton>
             </Box>
           </Box>
         </Container>
         <StakeTable address={address} />
       </Main>
     </>
-  )
+  );
 }
 
-export default AmbassadorPool1
+export default AmbassadorPool1;
