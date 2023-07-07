@@ -22,7 +22,7 @@ type StakingContractProps = {
 }
 
 type AllowanceBalanceProps = {
-    ownerAddress: `0x${string}` | string | undefined,
+    ownerAddress: `0x${string}` | undefined,
 }
 
 type erc20ContractAddressApproveProps = {
