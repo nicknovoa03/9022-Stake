@@ -1,5 +1,7 @@
-# Staking Web3 Application 
+# Staking Web3 Application
+
 ## Powered by
+
 - next.js
 - react
 - typescript
@@ -14,4 +16,3 @@ yarn run dev
 # or
 yarn dev
 ```
-

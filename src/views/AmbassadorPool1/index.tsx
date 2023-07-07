@@ -1,1 +1,1 @@
-export { default } from './AmbassadorPool1'
+export { default } from './AmbassadorPool1';

@@ -1,7 +1,7 @@
-import { Grid } from '@mui/material'
-import Image from 'next/image'
-import Link from 'next/link'
-import Logo from '/public/Logo.png'
+import { Grid } from '@mui/material';
+import Image from 'next/image';
+import Link from 'next/link';
+import Logo from '/public/Logo.png';
 
 export const TopBar = () => (
   <Grid container>
@@ -22,4 +22,4 @@ export const TopBar = () => (
       </Link>
     </Grid>
   </Grid>
-)
+);

@@ -1,1 +1,1 @@
-export { default } from './StakingConsole'
+export { default } from './StakingConsole';

@@ -1,18 +1,18 @@
-import React from 'react'
-import { useTheme } from '@mui/material/styles'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import Avatar from '@mui/material/Avatar'
-import Grid from '@mui/material/Grid'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemAvatar from '@mui/material/ListItemAvatar'
+import React from 'react';
+import { useTheme } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
 
-import Container from '../../../../components/Container'
+import Container from '../../../../components/Container';
 
 const mock = [
   {
@@ -66,10 +66,10 @@ const mock = [
     size: 6,
     href: '/Pool1'
   }
-]
+];
 
 const WithHighlightingAndPrimaryColor = () => {
-  const theme = useTheme()
+  const theme = useTheme();
 
   return (
     <Grid container spacing={4}>
@@ -133,7 +133,7 @@ const WithHighlightingAndPrimaryColor = () => {
         </Grid>
       ))}
     </Grid>
-  )
-}
+  );
+};
 
-export default WithHighlightingAndPrimaryColor
+export default WithHighlightingAndPrimaryColor;

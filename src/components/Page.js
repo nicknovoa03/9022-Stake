@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import AOS from 'aos'
-import theme from '../theme/index'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import AOS from 'aos';
+import theme from '../theme/index';
 
 export default function Page({ children }) {
   React.useEffect(() => {
     // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side')
+    const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
+      jssStyles.parentElement.removeChild(jssStyles);
     }
 
     AOS.init({
@@ -20,12 +20,12 @@ export default function Page({ children }) {
       duration: 1400,
       offset: 0,
       easing: 'ease-in-out'
-    })
-  }, [])
+    });
+  }, []);
 
   useEffect(() => {
-    AOS.refresh()
-  })
+    AOS.refresh();
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,9 +33,9 @@ export default function Page({ children }) {
       <CssBaseline />
       <div className="body">{children}</div>
     </ThemeProvider>
-  )
+  );
 }
 
 Page.propTypes = {
   children: PropTypes.node.isRequired
-}
+};

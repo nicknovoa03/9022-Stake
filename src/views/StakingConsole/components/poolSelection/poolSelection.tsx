@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react'
-import { Grid, Box } from '@mui/material'
-import { MainButton, PoolSelectionButton } from '../../../AmbassadorPool1/components/form/formElements'
+import React, { ReactNode } from 'react';
+import { Grid, Box } from '@mui/material';
+import { MainButton, PoolSelectionButton } from '../../../AmbassadorPool1/components/form/formElements';
 
 interface PoolSelectionButtonProps {
-  href: string
-  poolName: string
-  size: number
+  href: string;
+  poolName: string;
+  size: number;
 }
 
 const PoolSelectionBox: React.FC<PoolSelectionButtonProps> = ({ href, poolName, size }) => {
@@ -17,13 +17,13 @@ const PoolSelectionBox: React.FC<PoolSelectionButtonProps> = ({ href, poolName, 
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: 'rgba(0,0,0,.4);',
-          borderRadius: 3,
+          borderRadius: 3
         }}
       >
         <PoolSelectionButton href={href}>{poolName}</PoolSelectionButton>
       </Box>
     </Grid>
-  )
-}
+  );
+};
 
-export default PoolSelectionBox
+export default PoolSelectionBox;

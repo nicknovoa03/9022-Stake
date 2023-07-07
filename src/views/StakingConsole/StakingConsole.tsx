@@ -16,7 +16,7 @@ import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrima
 import { ERC20BalanceOf, ERC721BalanceOf } from '../AmbassadorPool1/components/contracts/wagmiContracts';
 
 function StakingConsole() {
-  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | string |undefined>();
+  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | string | undefined>();
   let [iAIBalanceSet, setiAIBalance] = useState(false);
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [NFTbalanceSet, setNFTBalance] = useState(false);
