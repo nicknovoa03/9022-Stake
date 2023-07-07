@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-export default async function getNFTMetadata(address: string): Promise<void> {
-    
+export default async function getNFTMetadata(address: string): Promise<string[]> {
+
     const options: AxiosRequestConfig = {
         method: 'GET',
         url: `https://api.nftport.xyz/v0/accounts/${address}`,
@@ -18,10 +18,17 @@ export default async function getNFTMetadata(address: string): Promise<void> {
     };
 
     try {
-        const response = await axios.request(options);
-        console.log(response.data);
+        const metadata = (await axios.request(options)).data.nfts;
+        const tokenIds: string[] | void = [];
+
+        metadata.forEach((item: any) => {
+            console.log("NFT ID:", item.token_id)
+            tokenIds.push(item.token_id);
+        });
+        return tokenIds;
     } catch (error) {
         console.error(error);
+        return []
     }
 }
 

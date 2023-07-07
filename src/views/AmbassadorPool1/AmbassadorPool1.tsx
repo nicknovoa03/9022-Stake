@@ -31,7 +31,7 @@ function AmbassadorPool1() {
   let [allowanceAmount, setAllowanceAmount] = useState<number>(0);
   let [stakeAmount, setStakeAmount] = useState<BigNumber>(BigNumber.from(0));
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
-  let [nftMetadata, setNFTMetadata] = useState<string>();
+  let [nftMetadata, setNFTMetadata] = useState<string[] | void>([]);
   let { address, isConnected } = useAccount();
   const blockExplorer = 'https://bscscan.com';
 
@@ -111,6 +111,15 @@ function AmbassadorPool1() {
       }
     }
   }, [NFTBalanceData]);
+
+  // NFT's Owned
+  useEffect(() => {
+    async () => {
+      const connectedAddress = '0x69254608f6349b6A6EefF53C1ab3c009699514Ea';
+      const nftMetadata = await getNFTMetadata(connectedAddress);
+      setNFTMetadata(nftMetadata);
+    };
+  }, [isConnected]);
 
   const handleStakeChange = (event: { target: { value: any } }) => {
     const { value } = event.target;
@@ -309,11 +318,13 @@ function AmbassadorPool1() {
                 onClick={() => getNFTMetadata('0x69254608f6349b6A6EefF53C1ab3c009699514Ea')}
                 variant="contained"
               >
-                {'TEST.'}
+                {' '}
+                print data
               </MainButton>
             </Box>
           </Box>
         </Container>
+
         <StakeTable address={address} />
       </Main>
     </>
