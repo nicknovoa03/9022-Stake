@@ -67,7 +67,7 @@ function StakingConsole() {
                       </Typography>
                     </Grid>
                     <Grid item sm={12}>
-                      <Typography fontSize={10} align="center" color="white">
+                      <Typography fontSize={14} align="center" color="white">
                         Earn $iAI rewards for your contributions to the ecosystem
                       </Typography>
                     </Grid>
