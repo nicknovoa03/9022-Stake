@@ -135,7 +135,6 @@ function AmbassadorPool1() {
     return /^\d+(\.\d+)?$/.test(value) && Number(value) >= 1;
   }
 
-  //console.log('NFT DATA:', nftMetadata);
   return (
     <>
       <Main>
