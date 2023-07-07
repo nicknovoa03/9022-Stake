@@ -2,6 +2,7 @@ import { BigNumber, ethers } from 'ethers'
 import { usePrepareContractWrite, useContractRead } from 'wagmi'
 import { erc20ABI } from 'wagmi'
 import truthGPTStaking from '../../../../components/contracts/truthGPTStake.json'
+import Collection9022 from '../../../../components/contracts/Collection9022.json'
 
 type ReadStakingContractProps = {
     ownerAddress: `0x${string}` | undefined,
@@ -20,7 +21,7 @@ type StakingContractProps = {
     stakeAmount: BigNumber
 }
 
-type AllowanceProps = {
+type AllowanceBalanceProps = {
     ownerAddress: `0x${string}` | undefined,
 }
 
@@ -28,19 +29,22 @@ type erc20ContractAddressApproveProps = {
     tokenAmount: BigNumber
 }
 
-export let ERC20_ContractAddress: `0x${string}` | undefined = '0x2abDB5903171071ac29cC0779d7EFDF0FaF14228'
+export let iAI_ContractAddress: `0x${string}` | undefined = '0x080CfFF23f0742EAb160561Dc5bF4d64Fa8822F6'
+export let NFT_ContractAddress: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b'
 export let StakingContractAddress: `0x${string}` | undefined = '0x4b12A3600916f923545786158f3F8569E9B96bE3'
 
-let testERC20: `0x${string}` | undefined = '0x48cA9498b901d34abbfA07a87aB62E56C1F2dF89'
+let testERC20: `0x${string}` | undefined = '0x080CfFF23f0742EAb160561Dc5bF4d64Fa8822F6'
+let testNFT: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b'
 let testStakingContract: `0x${string}` | undefined = '0x60db3b3fef8aee5e1dfb0db9a5db4d4ade8f99a1'
 
-//ERC20_ContractAddress = testERC20
-//StakingContractAddress = testStakingContract
+iAI_ContractAddress = testERC20
+NFT_ContractAddress = testNFT
+StakingContractAddress = testStakingContract
 
 // Get Allowance for token owner and spender
-export const ERC20Allowance = (props: AllowanceProps) => {
+export const ERC20Allowance = (props: AllowanceBalanceProps) => {
     const { data } = useContractRead({
-        address: ERC20_ContractAddress,
+        address: iAI_ContractAddress,
         abi: erc20ABI,
         functionName: 'allowance',
         args: [props.ownerAddress!, StakingContractAddress!]
@@ -49,14 +53,26 @@ export const ERC20Allowance = (props: AllowanceProps) => {
 }
 
 // Get balance of for token owner 
-export const ERC20BalanceOf = (props: AllowanceProps) => {
+export const ERC20BalanceOf = (props: AllowanceBalanceProps) => {
     const { data } = useContractRead({
-        address: ERC20_ContractAddress,
+        address: iAI_ContractAddress,
         abi: erc20ABI,
         functionName: 'balanceOf',
         args: [props.ownerAddress!]
     })
     return data;
+}
+
+
+// Get balance of for token owner 
+export const ERC721BalanceOf = (props: AllowanceBalanceProps) => {
+    const { data } = useContractRead({
+        address: NFT_ContractAddress,
+        abi: Collection9022.abi,
+        functionName: 'balanceOf',
+        args: [props.ownerAddress!]
+    })
+    return data as BigNumber;
 }
 
 // Get staking balance for an address
@@ -139,7 +155,7 @@ export const ClaimRewardPreparedContract = () => {
 // Approve token for tokenTransfer
 export const ERC20PreparedContractApprove = (props: erc20ContractAddressApproveProps) => {
     const { config } = usePrepareContractWrite({
-        address: ERC20_ContractAddress,
+        address: iAI_ContractAddress,
         abi: erc20ABI,
         functionName: 'approve',
         args: [StakingContractAddress!, props.tokenAmount],

@@ -1,26 +1,58 @@
-import { Box, Divider, Grid, Link, Typography } from '@mui/material'
-import Main from '../../layouts/Main/Main'
-import AmbassadorPool1 from '../AmbassadorPool1/AmbassadorPool1'
-import { grey } from '@mui/material/colors'
-import { Web3Button } from '@web3modal/react'
-import { ethers } from 'ethers'
-import theme from '../../theme'
-import { StakeAmountField, MainButton, PoolSelectionButton } from '../AmbassadorPool1/components/form/formElements'
-import { ContractAddress, WalletAddress } from '../AmbassadorPool1/components/form/stakeElements'
-import IAiLogo from '../AmbassadorPool1/components/logos/IAiLogo'
-import { useEffect, useState } from 'react'
-import { useAccount } from 'wagmi'
-import Container from '../../components/Container'
-import PoolSelectionBox from './components/poolSelection/poolSelection'
-import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrimaryColor'
+import { Box, Divider, Grid, Link, Typography } from '@mui/material';
+import Main from '../../layouts/Main/Main';
+import AmbassadorPool1 from '../AmbassadorPool1/AmbassadorPool1';
+import { grey } from '@mui/material/colors';
+import { Web3Button } from '@web3modal/react';
+import { BigNumber, ethers } from 'ethers';
+import theme from '../../theme';
+import { StakeAmountField, MainButton, PoolSelectionButton } from '../AmbassadorPool1/components/form/formElements';
+import { ContractAddress, WalletAddress } from '../AmbassadorPool1/components/form/stakeElements';
+import IAiLogo from '../AmbassadorPool1/components/logos/IAiLogo';
+import { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
+import Container from '../../components/Container';
+import PoolSelectionBox from './components/poolSelection/poolSelection';
+import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrimaryColor';
+import { ERC20BalanceOf, ERC721BalanceOf } from '../AmbassadorPool1/components/contracts/wagmiContracts';
 
 function StakingConsole() {
-  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>()
-  let { address, isConnected } = useAccount()
+  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
+  let [iAIBalanceSet, setiAIBalance] = useState(false);
+  let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [NFTbalanceSet, setNFTBalance] = useState(false);
+  let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
+  let { address, isConnected } = useAccount();
 
+  // User erc20 Balance
+  const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
   useEffect(() => {
-    setConnectedAddress(address)
-  }, [isConnected])
+    if (iAIBalanceData) {
+      setiAIBalanceAmount(iAIBalanceData);
+      if (Number(ethers.utils.formatEther(iAIbalanceAmount)) > 1) {
+        setiAIBalance(true);
+      } else {
+        setiAIBalance(false);
+      }
+    }
+  }, [iAIBalanceData]);
+
+  // User erc721Balance
+  const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
+  useEffect(() => {
+    if (NFTBalanceData) {
+      setNFTBalanceAmount(NFTBalanceData);
+      if (Number(ethers.utils.formatEther(NFTBalanceData)) > 1) {
+        setNFTBalance(true);
+      } else {
+        setNFTBalance(false);
+      }
+    }
+  }, [NFTBalanceData]);
+
+  // Save Connected Address to state
+  useEffect(() => {
+    setConnectedAddress(address);
+  }, [isConnected]);
 
   return (
     <>
@@ -101,10 +133,31 @@ function StakingConsole() {
                   <br />
                 </Typography>
               </Box>
-              <Box marginTop={3}>
+              <Box
+                marginTop={3}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
                 <Box>
-                  <Web3Button balance="show" />
+                  <Web3Button />
                 </Box>
+                {connectedAddress && (
+                  <>
+                    <Box>
+                      <Typography align="center" fontSize={22} sx={{ mt: 3 }} color={grey[100]}>
+                        $iAI Balance: {ethers.utils.formatUnits(iAIbalanceAmount)}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography align="center" fontSize={22} sx={{ mt: 3 }} color={grey[100]}>
+                        9022 Held: {Number(NFTBalanceAmount)}
+                      </Typography>
+                    </Box>
+                  </>
+                )}
               </Box>
             </Box>
             <Box marginY={5}>
@@ -126,7 +179,7 @@ function StakingConsole() {
         </Container>
       </Main>
     </>
-  )
+  );
 }
 
-export default StakingConsole
+export default StakingConsole;
