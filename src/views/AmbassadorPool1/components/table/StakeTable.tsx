@@ -1,41 +1,41 @@
-import { useEffect, useState } from 'react'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import { Box, Typography } from '@mui/material'
-import Container from '../../../../components/Container'
-import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../form/formElements'
-import { useContractWrite, useWaitForTransaction } from 'wagmi'
+import { useEffect, useState } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import { Box, Typography } from '@mui/material';
+import Container from '../../../../components/Container';
+import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../form/formElements';
+import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import {
   UnstakePreparedContract,
   WithdrawPreparedContract,
   AllStaked,
   ClaimRewardPreparedContract
-} from '../contracts/wagmiContracts'
-import { BigNumber, ethers } from 'ethers'
-import { StakingBalance } from '../contracts/wagmiContracts'
+} from '../contracts/wagmiContracts';
+import { BigNumber, ethers } from 'ethers';
+import { StakingBalance } from '../contracts/wagmiContracts';
 
 type StakeTableProps = {
-  address: `0x${string}` | undefined
-}
+  address: `0x${string}` | string | undefined;
+};
 
 interface StakeData {
-  id: number
-  startDate: string
-  amount: string
-  reward: string
-  penalty: string
-  endDate: string
-  stakeComplete: boolean
+  id: number;
+  startDate: string;
+  amount: string;
+  reward: string;
+  penalty: string;
+  endDate: string;
+  stakeComplete: boolean;
 }
 
 export default function StakeTable({ address }: StakeTableProps) {
-  let [stakingBalance, setStakingBalance] = useState<String>('0')
-  let [hasStakes, setHasStakes] = useState(false)
-  let [activeStakes, setActiveStakes] = useState<StakeData[]>([])
-  let [selectedIndex, setSelectedIndex] = useState<number>()
-  let [hasRewards, setHasRewards] = useState<Boolean>(false)
+  let [stakingBalance, setStakingBalance] = useState<String>('0');
+  let [hasStakes, setHasStakes] = useState(false);
+  let [activeStakes, setActiveStakes] = useState<StakeData[]>([]);
+  let [selectedIndex, setSelectedIndex] = useState<number>();
+  let [hasRewards, setHasRewards] = useState<Boolean>(false);
 
   function createData(
     id: number,
@@ -46,70 +46,70 @@ export default function StakeTable({ address }: StakeTableProps) {
     endDate: string,
     stakeComplete: boolean
   ) {
-    return { id, startDate, amount, interest, penalty, endDate, stakeComplete }
+    return { id, startDate, amount, interest, penalty, endDate, stakeComplete };
   }
-  const penalty = 0
-  const interest = 7.5
+  const penalty = 0;
+  const interest = 7.5;
 
   // Staking balance
-  const stakingBalanceData = StakingBalance({ ownerAddress: address! }) as BigNumber
+  const stakingBalanceData = StakingBalance({ ownerAddress: address! }) as BigNumber;
 
   // Unstake
   const unstakeConfig = UnstakePreparedContract({
     index: selectedIndex!
-  })
+  });
 
-  const { data: unstakeData, write: unstakeWrite } = useContractWrite(unstakeConfig)
+  const { data: unstakeData, write: unstakeWrite } = useContractWrite(unstakeConfig);
 
   const { isLoading: unstakeIsLoading, isSuccess: unStakeIsSuccessful } = useWaitForTransaction({
     hash: unstakeData?.hash
-  })
+  });
 
   // Withdraw
   const withdrawConfig = WithdrawPreparedContract({
     index: selectedIndex!
-  })
-  const { data: withdrawData, write: withdrawWrite } = useContractWrite(withdrawConfig)
+  });
+  const { data: withdrawData, write: withdrawWrite } = useContractWrite(withdrawConfig);
   const { isLoading: withdrawIsLoading, isSuccess: withdrawIsSuccessful } = useWaitForTransaction({
     hash: withdrawData?.hash
-  })
+  });
 
   // Claim Rewards
-  const claimRewardConfig = ClaimRewardPreparedContract()
-  const { data: claimRewardsData, write: claimRewardsWrite } = useContractWrite(claimRewardConfig)
+  const claimRewardConfig = ClaimRewardPreparedContract();
+  const { data: claimRewardsData, write: claimRewardsWrite } = useContractWrite(claimRewardConfig);
   const { isLoading: claimRewardsIsLoading, isSuccess: claimRewardsIsSuccess } = useWaitForTransaction({
     hash: claimRewardsData?.hash
-  })
+  });
 
-  const staked = AllStaked({ ownerAddress: address })
+  const staked = AllStaked({ ownerAddress: address });
 
   useEffect(() => {
     if (stakingBalanceData) {
-      setStakingBalance(ethers.utils.formatEther(stakingBalanceData))
+      setStakingBalance(ethers.utils.formatEther(stakingBalanceData));
     }
-  }, [stakingBalanceData])
+  }, [stakingBalanceData]);
 
   // This is a React useEffect hook that will run whenever the value of `staked` changes
   useEffect(() => {
     // Check if `staked` is an array and has at least one element
     if (Array.isArray(staked) && staked.length > 0) {
-      let activeStake: any = []
-      setHasStakes(true)
+      let activeStake: any = [];
+      setHasStakes(true);
       // Iterate through each element in `staked`
-      let currentDate = new Date()
+      let currentDate = new Date();
       for (let i = 0; i < staked.length; i++) {
         // Convert the `amount` value from Wei to Ether
-        let amount = ethers.utils.formatEther(staked[i].amount)
+        let amount = ethers.utils.formatEther(staked[i].amount);
         // Convert the timestamp value to a JavaScript Date object for the start and end dates
-        let startDate = new Date(staked[i].timestamp.toNumber() * 1000)
-        let endDate = new Date(staked[i].timestamp.toNumber() * 1000)
+        let startDate = new Date(staked[i].timestamp.toNumber() * 1000);
+        let endDate = new Date(staked[i].timestamp.toNumber() * 1000);
         // Add 30 days to the end date
-        endDate.setDate(endDate.getDate())
+        endDate.setDate(endDate.getDate());
         // check if end date is passed the current datez
-        let stakeComplete = false
+        let stakeComplete = false;
         if (endDate < currentDate) {
-          stakeComplete = true
-          setHasRewards(true)
+          stakeComplete = true;
+          setHasRewards(true);
         }
         // Create an object with the formatted start date, amount, interest rate, penalty rate, and formatted end date
         let stakeData = createData(
@@ -120,32 +120,32 @@ export default function StakeTable({ address }: StakeTableProps) {
           penalty,
           endDate.toLocaleString(),
           stakeComplete
-        )
+        );
         // Add the stake data object to the `activeStake` array
-        activeStake.push(stakeData)
+        activeStake.push(stakeData);
       }
-      setActiveStakes(activeStake)
+      setActiveStakes(activeStake);
     }
-  }, [staked])
+  }, [staked]);
 
   function handleWithdrawClick(id: number) {
-    setIndexFromClick(id)
+    setIndexFromClick(id);
     if (withdrawWrite) {
       //console.log(selectedIndex)
-      withdrawWrite()
+      withdrawWrite();
     }
   }
 
   function handleUnstakeClick(id: number) {
-    setIndexFromClick(id)
+    setIndexFromClick(id);
     if (unstakeWrite) {
       //console.log(selectedIndex)
-      unstakeWrite()
+      unstakeWrite();
     }
   }
 
   function setIndexFromClick(id: number) {
-    setSelectedIndex(id)
+    setSelectedIndex(id);
   }
 
   return (
@@ -249,5 +249,5 @@ export default function StakeTable({ address }: StakeTableProps) {
         </Container>
       )}
     </>
-  )
+  );
 }

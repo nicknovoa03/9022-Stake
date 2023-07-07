@@ -5,7 +5,7 @@ import truthGPTStaking from '../../../../components/contracts/truthGPTStake.json
 import Collection9022 from '../../../../components/contracts/Collection9022.json'
 
 type ReadStakingContractProps = {
-    ownerAddress: `0x${string}` | undefined,
+    ownerAddress: `0x${string}` | string | undefined,
 }
 
 type ReadStakingDetailsContractProps = {
@@ -22,7 +22,7 @@ type StakingContractProps = {
 }
 
 type AllowanceBalanceProps = {
-    ownerAddress: `0x${string}` | undefined,
+    ownerAddress: `0x${string}` | string | undefined,
 }
 
 type erc20ContractAddressApproveProps = {

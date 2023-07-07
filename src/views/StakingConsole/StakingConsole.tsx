@@ -16,7 +16,7 @@ import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrima
 import { ERC20BalanceOf, ERC721BalanceOf } from '../AmbassadorPool1/components/contracts/wagmiContracts';
 
 function StakingConsole() {
-  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
+  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | string |undefined>();
   let [iAIBalanceSet, setiAIBalance] = useState(false);
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [NFTbalanceSet, setNFTBalance] = useState(false);
@@ -148,11 +148,11 @@ function StakingConsole() {
                   <>
                     <Box>
                       <Typography align="center" fontSize={22} sx={{ mt: 3 }} color={grey[100]}>
-                        $iAI Balance: {ethers.utils.formatUnits(iAIbalanceAmount)}
+                        $iAI Balance: {Number(ethers.utils.formatEther(iAIbalanceAmount)).toFixed(3)}
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography align="center" fontSize={22} sx={{ mt: 3 }} color={grey[100]}>
+                      <Typography align="center" fontSize={22} sx={{ mt: 1 }} color={grey[100]}>
                         9022 Held: {Number(NFTBalanceAmount)}
                       </Typography>
                     </Box>
