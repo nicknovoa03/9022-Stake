@@ -12,8 +12,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 
-import Container from '../../../../components/Container';
-
 const mock = [
   {
     title: 'Pool 1',

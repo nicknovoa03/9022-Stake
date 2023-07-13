@@ -5,13 +5,10 @@ import { grey } from '@mui/material/colors';
 import { Web3Button } from '@web3modal/react';
 import { BigNumber, ethers } from 'ethers';
 import theme from '../../theme';
-import { StakeAmountField, MainButton, PoolSelectionButton } from '../AmbassadorPool1/components/form/formElements';
-import { ContractAddress, WalletAddress } from '../AmbassadorPool1/components/form/stakeElements';
 import IAiLogo from '../AmbassadorPool1/components/logos/IAiLogo';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
-import PoolSelectionBox from './components/poolSelection/poolSelection';
 import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrimaryColor';
 import { ERC20BalanceOf, ERC721BalanceOf } from '../AmbassadorPool1/components/contracts/wagmiContracts';
 
