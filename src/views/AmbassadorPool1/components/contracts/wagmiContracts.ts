@@ -33,7 +33,7 @@ export let iAI_ContractAddress: `0x${string}` | undefined = '0x080CfFF23f0742EAb
 export let NFT_ContractAddress: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b';
 export let StakingContractAddress: `0x${string}` | undefined = '0x4b12A3600916f923545786158f3F8569E9B96bE3';
 
-let testERC20: `0x${string}` | undefined = '0x080CfFF23f0742EAb160561Dc5bF4d64Fa8822F6';
+let testERC20: `0x${string}` | undefined = '0xB83cA21FED7054bAE76613cEd0215FaA06706361';
 let testNFT: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b';
 let testStakingContract: `0x${string}` | undefined = '0x60db3b3fef8aee5e1dfb0db9a5db4d4ade8f99a1';
 
