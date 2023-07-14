@@ -10,7 +10,13 @@ import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
 import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrimaryColor';
-import { ERC20BalanceOf, ERC721BalanceOf } from '../AmbassadorPool1/components/contracts/wagmiContracts';
+import {
+  ERC20BalanceOf,
+  ERC721BalanceOf,
+  NFT_ContractAddress
+} from '../AmbassadorPool1/components/contracts/wagmiContracts';
+import getNFTMetadata from '../AmbassadorPool1/components/nfts/NFTMetadata';
+import { MainButton } from '../AmbassadorPool1/components/form/formElements';
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
@@ -18,7 +24,18 @@ function StakingConsole() {
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [NFTbalanceSet, setNFTBalance] = useState(false);
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [nftMetadata, setNFTMetadata] = useState<string[]>([]);
   let { address, isConnected } = useAccount();
+
+  // set NFT's Owned
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    const loadNftMetadata = await getNFTMetadata('0x69254608f6349b6A6EefF53C1ab3c009699514Ea');
+    setNFTMetadata(loadNftMetadata);
+  }
 
   // User erc20 Balance
   const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
@@ -50,6 +67,10 @@ function StakingConsole() {
   useEffect(() => {
     setConnectedAddress(address);
   }, [isConnected]);
+
+  async function printMetadata() {
+    console.log(nftMetadata);
+  }
 
   return (
     <>
@@ -153,6 +174,17 @@ function StakingConsole() {
                         9022 Held: {Number(NFTBalanceAmount)}
                       </Typography>
                     </Box>
+                    <Box>
+                      <Link href="https://opensea.io/account?search[collections][0]=9022-collection" target='_blank'>
+                        <Typography align="center" fontSize={18} sx={{ mt: 0 }} color={grey[100]}>
+                          View On Opensea
+                        </Typography>
+                      </Link>
+                    </Box>
+                    <MainButton fullWidth onClick={() => printMetadata()} variant="contained">
+                      {' '}
+                      print data
+                    </MainButton>
                   </>
                 )}
               </Box>

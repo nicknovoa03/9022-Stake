@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 export default async function getNFTMetadata(address: string): Promise<string[]> {
+    const MainnetNftContractAddress = '0x853806fCa5Ee8a6Ac99Dc84a8e3596A4F6541796';
+    const TestnetNftContractAddress = "0x98F889e00f2AA49c5c30938f555B0488d4f59B8b"
     const options: AxiosRequestConfig = {
         method: 'GET',
         url: `https://api.nftport.xyz/v0/accounts/${address}`,
@@ -8,7 +10,7 @@ export default async function getNFTMetadata(address: string): Promise<string[]>
             chain: 'ethereum',
             page_size: '50',
             include: 'default',
-            contract_address: '0x853806fCa5Ee8a6Ac99Dc84a8e3596A4F6541796'
+            contract_address: MainnetNftContractAddress
         },
         headers: {
             accept: 'application/json',
@@ -18,18 +20,11 @@ export default async function getNFTMetadata(address: string): Promise<string[]>
 
     try {
         const metadata = (await axios.request(options)).data.nfts;
-        const tokenIds: string[] | void = [];
+        let tokenIds: string[] = [];
         metadata.forEach((item: any) => {
-            console.log('NFT ID:', item.token_id);
-        });
-        return metadata
-        /*
-        metadata.forEach((item: any) => {
-          console.log('NFT ID:', item.token_id);
-          tokenIds.push(item.token_id);
+            tokenIds.push(item.token_id);
         });
         return tokenIds;
-        */
     } catch (error) {
         console.error(error);
         return [];
