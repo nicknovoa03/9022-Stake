@@ -16,6 +16,7 @@ import {
   ERC20BalanceOf,
   ERC20PreparedContractApprove,
   ERC721BalanceOf,
+  NFT_ContractAddress,
   StakePreparedContract,
   StakingContractAddress
 } from './components/contracts/wagmiContracts';
@@ -115,7 +116,7 @@ function AmbassadorPool1() {
   // NFT's Owned
   useEffect(() => {
     async () => {
-      const connectedAddress = '0x69254608f6349b6A6EefF53C1ab3c009699514Ea';
+      const connectedAddress = NFT_ContractAddress!;
       const nftMetadata = await getNFTMetadata(connectedAddress);
       setNFTMetadata(nftMetadata);
     };
@@ -135,6 +136,9 @@ function AmbassadorPool1() {
     return /^\d+(\.\d+)?$/.test(value) && Number(value) >= 1;
   }
 
+  async function printMetadata() {
+    await console.log(getNFTMetadata(connectedAddress!));
+  }
   return (
     <>
       <Main>
@@ -312,18 +316,9 @@ function AmbassadorPool1() {
               <Typography align="center" fontSize={22} sx={{ mt: 3 }} color={grey[100]} textTransform="uppercase">
                 Pool Balance: {Number(poolBalance).toLocaleString('en-US')} $iAi
               </Typography>
-              <MainButton
-                fullWidth
-                onClick={() => getNFTMetadata('0x69254608f6349b6A6EefF53C1ab3c009699514Ea')}
-                variant="contained"
-              >
-                {' '}
-                print data
-              </MainButton>
             </Box>
           </Box>
         </Container>
-
         <StakeTable address={address} />
       </Main>
     </>
