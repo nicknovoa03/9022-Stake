@@ -13,7 +13,7 @@ import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3mod
 const projectId = '72e247ee043a24a6e5ecfa195061a9fd';
 
 // 2. Configure wagmi client
-const chains = [ sepolia];
+const chains = [sepolia];
 const { provider } = configureChains(chains, [walletConnectProvider({ projectId })]);
 const wagmiClient = createClient({
   autoConnect: true,
