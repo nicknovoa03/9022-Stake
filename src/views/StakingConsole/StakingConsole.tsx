@@ -16,6 +16,7 @@ import {
   NFT_ContractAddress
 } from '../AmbassadorPool1/components/contracts/wagmiContracts';
 import getNFTMetadata from '../AmbassadorPool1/components/nfts/NFTMetadata';
+import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
 import { MainButton } from '../AmbassadorPool1/components/form/formElements';
 
 function StakingConsole() {
@@ -25,6 +26,7 @@ function StakingConsole() {
   let [NFTbalanceSet, setNFTBalance] = useState(false);
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [nftMetadata, setNFTMetadata] = useState<string[]>([]);
+  let [ownedNfts, setOwnedNfts] = useState<{ [key: string]: number }>({});
   let { address, isConnected } = useAccount();
 
   // set NFT's Owned
@@ -35,6 +37,39 @@ function StakingConsole() {
   async function fetchData() {
     const loadNftMetadata = await getNFTMetadata('0x69254608f6349b6A6EefF53C1ab3c009699514Ea');
     setNFTMetadata(loadNftMetadata);
+  }
+
+  // set NFT background data to state
+  useEffect(() => {
+    matchMetadata();
+  }, [nftMetadata]);
+
+  function matchMetadata() {
+    //console.log('loaded nft metadata:', nftMetadata);
+    let nftBackgroundDictionary: { [key: string]: number } = {};
+    for (let i in nftMetadata) {
+      // get nft number
+      let nftNumber = nftMetadata[i];
+      // get background type
+      let nftBackground = nftMetadataDictionary[nftNumber.toString()];
+      let backgroundIdentifier: string;
+      // check background and set identifier
+      if (nftBackground == 'Destination Inheritance') {
+        backgroundIdentifier = 'DI';
+      } else if (nftBackground == 'Basquiat' || nftBackground == 'Warhol') {
+        backgroundIdentifier = 'Prestige';
+      } else {
+        backgroundIdentifier = 'Standard';
+      }
+      // add to dictionary or increment count
+      if (!nftBackgroundDictionary[backgroundIdentifier]) {
+        nftBackgroundDictionary[backgroundIdentifier] = 1;
+      } else {
+        nftBackgroundDictionary[backgroundIdentifier]++;
+      }
+    }
+    // set state
+    setOwnedNfts(nftBackgroundDictionary);
   }
 
   // User erc20 Balance
@@ -175,13 +210,13 @@ function StakingConsole() {
                       </Typography>
                     </Box>
                     <Box>
-                      <Link href="https://opensea.io/account?search[collections][0]=9022-collection" target='_blank'>
+                      <Link href="https://opensea.io/account?search[collections][0]=9022-collection" target="_blank">
                         <Typography align="center" fontSize={18} sx={{ mt: 0 }} color={grey[100]}>
                           View On Opensea
                         </Typography>
                       </Link>
                     </Box>
-                    <MainButton fullWidth onClick={() => printMetadata()} variant="contained">
+                    <MainButton fullWidth onClick={() => matchMetadata()} variant="contained">
                       {' '}
                       print data
                     </MainButton>
@@ -202,7 +237,7 @@ function StakingConsole() {
               </Typography>
             </Box>
             <Box>
-              <PoolOptions />
+              <PoolOptions ownedNfts={ownedNfts} />
             </Box>
           </Box>
         </Container>

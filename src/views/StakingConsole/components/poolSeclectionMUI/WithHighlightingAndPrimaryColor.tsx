@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -20,6 +20,9 @@ const mock = [
       'Minimum 9022 NFTs Required: 1',
       'YEARLY Distribution on iAI THRESHOLD: 2%'
     ],
+    iAiTokenReqs: 10000,
+    nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
+    nftCountReqs: 1,
     size: 4,
     href: '/Pool1'
   },
@@ -30,6 +33,9 @@ const mock = [
       'Minimum 9022 NFTs Required: 2',
       'YEARLY Distribution on iAI THRESHOLD: 4%'
     ],
+    iAiTokenReqs: 30000,
+    nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
+    nftCountReqs: 1,
     size: 4,
     href: '/Pool1'
   },
@@ -41,6 +47,9 @@ const mock = [
       'YEARLY Distribution on iAI THRESHOLD: 5.5%',
       '.5% will be added to the total distribution for each NFT held >3. Max 9% iAI THRESHOLD'
     ],
+    iAiTokenReqs: 100000,
+    nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
+    nftCountReqs: 3,
     size: 4,
     href: '/Pool1'
   },
@@ -51,6 +60,9 @@ const mock = [
       '9022 NFTs Required: Prestige',
       'YEARLY Distribution on iAI THRESHOLD: 10%'
     ],
+    iAiTokenReqs: 200000,
+    nftBackgroundReqs: ['DI', 'Prestige'],
+    nftCountReqs: 1,
     size: 6,
     href: '/Pool1'
   },
@@ -61,13 +73,40 @@ const mock = [
       '9022 NFTs Required: Destination Inheritance',
       'YEARLY Distribution on iAI THRESHOLD: 12%'
     ],
+    iAiTokenReqs: 300000,
+    nftBackgroundReqs: ['DI'],
+    nftCountReqs: 1,
     size: 6,
     href: '/Pool1'
   }
 ];
 
-const WithHighlightingAndPrimaryColor = () => {
+const WithHighlightingAndPrimaryColor = (ownedNfts: any) => {
   const theme = useTheme();
+  let [nftCount, setNftCount] = useState(0);
+  let [prestigeFlag, setPrestigeFlag] = useState<Boolean>(false);
+  let [destinationInheritanceFlag, setDestinationInheritanceFlag] = useState<Boolean>(false);
+
+  useEffect(() => {
+    let sum = 0;
+    let nfts: any = Object.values(ownedNfts)[0];
+    //setNftCount(Object.values(ownedNfts)[0]);
+    console.log('owned nfts:', nfts);
+    //console.log('nft count:', Object.keys(nfts));
+    for (const key in nfts) {
+      if (key == 'Prestige') {
+        setPrestigeFlag(true);
+      }
+      if (key == 'DI') {
+        setDestinationInheritanceFlag(true);
+      }
+      sum += nfts[key];
+    }
+    setNftCount(sum);
+    console.log('nftCount:', nftCount);
+    console.log('prestige flag:', prestigeFlag);
+    console.log('DI flag:', destinationInheritanceFlag);
+  });
 
   return (
     <Grid container spacing={4}>
@@ -87,11 +126,39 @@ const WithHighlightingAndPrimaryColor = () => {
                 padding: 4
               }}
             >
-              <Box marginBottom={4}>
+              <Box marginBottom={0}>
                 <Typography variant={'h4'} align="center" color={theme.palette.common.white}>
                   <Box component={'span'} fontWeight={600}>
                     {item.title}
                   </Box>
+                </Typography>
+              </Box>
+
+              <Box marginBottom={2}>
+                <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
+                  {nftCount >= item.nftCountReqs ? (
+                    <Box
+                      component="span"
+                      sx={{
+                        padding: 0.5,
+                        color: 'green'
+                      }}
+                      fontWeight={600}
+                    >
+                      Elidgable
+                    </Box>
+                  ) : (
+                    <Box
+                      component="span"
+                      sx={{
+                        padding: 0.5,
+                        color: 'red'
+                      }}
+                      fontWeight={600}
+                    >
+                      Inelidgable
+                    </Box>
+                  )}
                 </Typography>
               </Box>
               <Grid container spacing={1}>
@@ -122,6 +189,7 @@ const WithHighlightingAndPrimaryColor = () => {
               </Grid>
             </CardContent>
             <Box flexGrow={1} />
+
             <CardActions sx={{ justifyContent: 'flex-end', padding: 4 }}>
               <Button size={'large'} variant={'contained'} href={item.href}>
                 Learn More
