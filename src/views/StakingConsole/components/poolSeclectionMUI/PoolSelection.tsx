@@ -39,7 +39,7 @@ const mock = [
     nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
     nftCountReqs: 1,
     size: 4,
-    href: '/Pool1'
+    href: '/Pool2'
   },
   {
     title: 'Pool 3',
@@ -53,7 +53,7 @@ const mock = [
     nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
     nftCountReqs: 3,
     size: 4,
-    href: '/Pool1'
+    href: '/Pool3'
   },
   {
     title: 'Prestige Ambassador',
@@ -66,7 +66,7 @@ const mock = [
     nftBackgroundReqs: ['DI', 'Prestige'],
     nftCountReqs: 100,
     size: 6,
-    href: '/Pool1'
+    href: '/PrestigePool'
   },
   {
     title: 'Destination Inheritance Ambassador',
@@ -79,7 +79,7 @@ const mock = [
     nftBackgroundReqs: ['DI'],
     nftCountReqs: 100,
     size: 6,
-    href: '/Pool1'
+    href: '/DIPool'
   }
 ];
 

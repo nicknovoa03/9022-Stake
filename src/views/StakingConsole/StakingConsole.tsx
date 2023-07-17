@@ -8,7 +8,7 @@ import IAiLogo from '../../components/logos/IAiLogo';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
-import PoolOptions from './components/poolSeclectionMUI/PoolSelection';
+import PoolSelection from './components/poolSeclectionMUI/PoolSelection';
 import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
 import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
@@ -227,7 +227,7 @@ function StakingConsole() {
               </Typography>
             </Box>
             <Box>
-              <PoolOptions ownedNfts={ownedNfts} connectedAddress={connectedAddress} />
+              <PoolSelection ownedNfts={ownedNfts} connectedAddress={connectedAddress} />
             </Box>
           </Box>
         </Container>
