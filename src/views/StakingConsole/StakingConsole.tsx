@@ -1,11 +1,11 @@
 import { Box, Divider, Grid, Link, Typography } from '@mui/material';
 import Main from '../../layouts/Main/Main';
-import AmbassadorPool1 from '../AmbassadorPool1/AmbassadorPool1';
+import Pool1 from '../Pool1/Pool1';
 import { grey } from '@mui/material/colors';
 import { Web3Button } from '@web3modal/react';
 import { BigNumber, ethers } from 'ethers';
 import theme from '../../theme';
-import IAiLogo from '../AmbassadorPool1/components/logos/IAiLogo';
+import IAiLogo from '../../components/logos/IAiLogo';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
@@ -14,10 +14,10 @@ import {
   ERC20BalanceOf,
   ERC721BalanceOf,
   NFT_ContractAddress
-} from '../AmbassadorPool1/components/contracts/wagmiContracts';
-import getNFTMetadata from '../AmbassadorPool1/components/nfts/NFTMetadata';
+} from '../../components/contracts/wagmiContracts';
+import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
-import { MainButton } from '../AmbassadorPool1/components/form/formElements';
+import { MainButton } from '../../components/form/formElements';
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();

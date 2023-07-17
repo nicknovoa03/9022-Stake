@@ -1,7 +1,7 @@
 import React from 'react';
-import { AmbassadorPool1 } from '../views';
+import { Pool1 } from '../views';
 const IndexPage = () => {
-  return <AmbassadorPool1 />;
+  return <Pool1 />;
 };
 
 export default IndexPage;

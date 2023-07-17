@@ -1,8 +1,8 @@
 import { BigNumber, ethers } from 'ethers';
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
-import truthGPTStaking from '../../../../components/contracts/truthGPTStake.json';
-import Collection9022 from '../../../../components/contracts/Collection9022.json';
+import truthGPTStaking from './truthGPTStake.json';
+import Collection9022 from './Collection9022.json';
 
 type ReadStakingContractProps = {
   ownerAddress: `0x${string}` | string | undefined;

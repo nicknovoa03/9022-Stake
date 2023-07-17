@@ -6,11 +6,11 @@ import Container from '../../components/Container';
 import { BigNumber, ethers } from 'ethers';
 import { Web3Button } from '@web3modal/react';
 import { useAccount, useContractWrite, useWaitForTransaction } from 'wagmi';
-import { StakeAmountField, MainButton } from './components/form/formElements';
-import IAiLogo from './components/logos/IAiLogo';
+import { StakeAmountField, MainButton } from '../../components/form/formElements';
+import IAiLogo from '../../components/logos/IAiLogo';
 import theme from '../../theme';
-import StakeTable from './components/table/StakeTable';
-import { ContractAddress, WalletAddress } from './components/form/stakeElements';
+import StakeTable from '../../components/table/StakeTable';
+import { ContractAddress, WalletAddress } from '../../components/form/stakeElements';
 import {
   ERC20Allowance,
   ERC20BalanceOf,
@@ -19,10 +19,10 @@ import {
   NFT_ContractAddress,
   StakePreparedContract,
   StakingContractAddress
-} from './components/contracts/wagmiContracts';
-import getNFTMetadata from './components/nfts/NFTMetadata';
+} from '../../components/contracts/wagmiContracts';
+import getNFTMetadata from '../../components/nfts/NFTMetadata';
 
-function AmbassadorPool1() {
+function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
   let [balanceSet, setBalance] = useState(false);
   let [balanceAmount, setBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
@@ -325,4 +325,4 @@ function AmbassadorPool1() {
   );
 }
 
-export default AmbassadorPool1;
+export default Pool1;

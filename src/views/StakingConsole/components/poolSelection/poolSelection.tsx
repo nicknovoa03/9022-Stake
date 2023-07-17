@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Grid, Box } from '@mui/material';
-import { MainButton, PoolSelectionButton } from '../../../AmbassadorPool1/components/form/formElements';
+import { MainButton, PoolSelectionButton } from '../../../../components/form/formElements';
 
 interface PoolSelectionButtonProps {
   href: string;

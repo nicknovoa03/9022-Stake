@@ -4,7 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from '@mui/material';
-import Container from '../../../../components/Container';
+import Container from '../Container';
 import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../form/formElements';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import {

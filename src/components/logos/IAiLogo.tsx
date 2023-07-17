@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import background from '../../../../../public/NFT-image.png';
+import background from 'public/NFT-image.png';
 
 function IAiLogo() {
   return <Image alt="9022 Logo" src={background} quality={100} />;

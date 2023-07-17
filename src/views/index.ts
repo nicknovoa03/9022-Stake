@@ -1,2 +1,2 @@
 export { default as StakingConsole } from './StakingConsole';
-export { default as AmbassadorPool1 } from './AmbassadorPool1';
+export { default as Pool1 } from './Pool1';

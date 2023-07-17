@@ -12,7 +12,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { BigNumber, ethers } from 'ethers';
-import { ERC20BalanceOf } from '../../../AmbassadorPool1/components/contracts/wagmiContracts';
+import { ERC20BalanceOf } from '../../../../components/contracts/wagmiContracts';
 
 const mock = [
   {
