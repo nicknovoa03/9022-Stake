@@ -74,7 +74,7 @@ function AmbassadorPool1() {
     }
   }, [balanceData, stakeAmount, balanceAmount]);
 
-  // Staking
+  // Locking
 
   // Pool Balance
   const poolBalanceData = ERC20BalanceOf({ ownerAddress: StakingContractAddress! });
@@ -85,7 +85,7 @@ function AmbassadorPool1() {
     }
   }, []);
 
-  // Stake
+  // Lock
   const stakeConfig = StakePreparedContract({
     stakeAmount: stakeAmount
   });
@@ -260,7 +260,7 @@ function AmbassadorPool1() {
                     fullWidth
                     className="inputRounded"
                     variant={'outlined'}
-                    label="Stake Amount"
+                    label="Lock Amount"
                     onChange={handleStakeChange}
                   />
                 </Box>
@@ -288,13 +288,13 @@ function AmbassadorPool1() {
                       </MainButton>
                     ) : (
                       <MainButton fullWidth variant="contained" disabled={!stakeWrite || stakeIsLoading}>
-                        {stakeIsLoading ? 'Staking... ' : `Staking Disabled`}
+                        {stakeIsLoading ? 'Locking... ' : `Locking Disabled`}
                       </MainButton>
                     )}
                     {stakeIsSuccessful && (
                       <>
                         <Typography variant="h6" align="center" sx={{ mt: 1 }} color="white">
-                          Successfully Staked $iAi!
+                          Successfully Lock $iAi!
                         </Typography>
                         <Link href={`${blockExplorer}/tx/${stakeData?.hash}`} target="_blank" underline="hover">
                           <Typography fontSize={20} align="center" color="white">

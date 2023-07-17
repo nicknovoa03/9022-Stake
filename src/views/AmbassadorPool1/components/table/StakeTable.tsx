@@ -163,7 +163,7 @@ export default function StakeTable({ address }: StakeTableProps) {
                 data-aos={'zoom-in'}
                 textTransform="uppercase"
               >
-                Active Stakes
+                Active Pools
               </Typography>
             </Box>
             <Box
@@ -190,7 +190,7 @@ export default function StakeTable({ address }: StakeTableProps) {
                   data-aos={'zoom-in'}
                   textTransform="uppercase"
                 >
-                  Personal Staked: {stakingBalance} $iAI
+                  Personally Pooled: {stakingBalance} $iAI
                 </Typography>
                 {hasRewards && (
                   <Box display="flex" justifyContent="center" alignItems="center" margin={2}>
