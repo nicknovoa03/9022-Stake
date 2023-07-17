@@ -9,7 +9,7 @@ import IAiLogo from '../AmbassadorPool1/components/logos/IAiLogo';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
-import PoolOptions from './components/poolSeclectionMUI/WithHighlightingAndPrimaryColor';
+import PoolOptions from './components/poolSeclectionMUI/PoolSelection';
 import {
   ERC20BalanceOf,
   ERC721BalanceOf,
@@ -216,10 +216,6 @@ function StakingConsole() {
                         </Typography>
                       </Link>
                     </Box>
-                    <MainButton fullWidth onClick={() => matchMetadata()} variant="contained">
-                      {' '}
-                      print data
-                    </MainButton>
                   </>
                 )}
               </Box>
@@ -237,7 +233,7 @@ function StakingConsole() {
               </Typography>
             </Box>
             <Box>
-              <PoolOptions ownedNfts={ownedNfts} />
+              <PoolOptions ownedNfts={ownedNfts} connectedAddress={connectedAddress} />
             </Box>
           </Box>
         </Container>

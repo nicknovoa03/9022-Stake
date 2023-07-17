@@ -11,6 +11,8 @@ import Grid from '@mui/material/Grid';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
+import { BigNumber, ethers } from 'ethers';
+import { ERC20BalanceOf } from '../../../AmbassadorPool1/components/contracts/wagmiContracts';
 
 const mock = [
   {
@@ -62,7 +64,7 @@ const mock = [
     ],
     iAiTokenReqs: 200000,
     nftBackgroundReqs: ['DI', 'Prestige'],
-    nftCountReqs: 1,
+    nftCountReqs: 100,
     size: 6,
     href: '/Pool1'
   },
@@ -75,18 +77,34 @@ const mock = [
     ],
     iAiTokenReqs: 300000,
     nftBackgroundReqs: ['DI'],
-    nftCountReqs: 1,
+    nftCountReqs: 100,
     size: 6,
     href: '/Pool1'
   }
 ];
 
-const WithHighlightingAndPrimaryColor = (ownedNfts: any) => {
+const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefined) => {
   const theme = useTheme();
+  let [iAIBalanceSet, setiAIBalance] = useState(false);
+  let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [nftCount, setNftCount] = useState(0);
   let [prestigeFlag, setPrestigeFlag] = useState<Boolean>(false);
   let [destinationInheritanceFlag, setDestinationInheritanceFlag] = useState<Boolean>(false);
 
+  // User erc20 Balance
+  const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
+  useEffect(() => {
+    if (iAIBalanceData) {
+      setiAIBalanceAmount(iAIBalanceData);
+      if (Number(ethers.utils.formatEther(iAIbalanceAmount)) > 1) {
+        setiAIBalance(true);
+      } else {
+        setiAIBalance(false);
+      }
+    }
+  }, [iAIBalanceData]);
+
+  // Set NFT data
   useEffect(() => {
     let sum = 0;
     let nfts: any = Object.values(ownedNfts)[0];
@@ -145,7 +163,7 @@ const WithHighlightingAndPrimaryColor = (ownedNfts: any) => {
                       }}
                       fontWeight={600}
                     >
-                      Elidgable
+                      Eligible
                     </Box>
                   ) : (
                     <Box
@@ -156,7 +174,7 @@ const WithHighlightingAndPrimaryColor = (ownedNfts: any) => {
                       }}
                       fontWeight={600}
                     >
-                      Inelidgable
+                      Ineligible
                     </Box>
                   )}
                 </Typography>
@@ -202,4 +220,4 @@ const WithHighlightingAndPrimaryColor = (ownedNfts: any) => {
   );
 };
 
-export default WithHighlightingAndPrimaryColor;
+export default PoolSelection;
