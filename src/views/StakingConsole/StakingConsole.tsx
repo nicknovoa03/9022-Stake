@@ -10,11 +10,7 @@ import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
 import PoolOptions from './components/poolSeclectionMUI/PoolSelection';
-import {
-  ERC20BalanceOf,
-  ERC721BalanceOf,
-  NFT_ContractAddress
-} from '../../components/contracts/wagmiContracts';
+import { ERC20BalanceOf, ERC721BalanceOf, NFT_ContractAddress } from '../../components/contracts/wagmiContracts';
 import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
 import { MainButton } from '../../components/form/formElements';
