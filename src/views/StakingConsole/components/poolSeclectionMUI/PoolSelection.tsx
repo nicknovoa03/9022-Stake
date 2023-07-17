@@ -85,7 +85,6 @@ const mock = [
 
 const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefined) => {
   const theme = useTheme();
-  let [iAIBalanceSet, setiAIBalance] = useState(false);
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [nftCount, setNftCount] = useState(0);
   let [prestigeFlag, setPrestigeFlag] = useState<Boolean>(false);
@@ -96,11 +95,6 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
   useEffect(() => {
     if (iAIBalanceData) {
       setiAIBalanceAmount(iAIBalanceData);
-      if (Number(ethers.utils.formatEther(iAIbalanceAmount)) > 1) {
-        setiAIBalance(true);
-      } else {
-        setiAIBalance(false);
-      }
     }
   }, [iAIBalanceData]);
 
@@ -154,7 +148,8 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
 
               <Box marginBottom={2}>
                 <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
-                  {nftCount >= item.nftCountReqs ? (
+                  {nftCount >= item.nftCountReqs &&
+                  Number(ethers.utils.formatEther(iAIbalanceAmount)) >= item.iAiTokenReqs ? (
                     <Box
                       component="span"
                       sx={{
