@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { AddressLink } from './formElements';
 
-const blockExplorer = 'https://bscscan.com/address/';
+const blockExplorer = 'https://etherscan.com/address/';
 const sepoliaExplorer = 'https://sepolia.etherscan.io/address/';
 const StakingContractAddress = '0x4b12A3600916f923545786158f3F8569E9B96bE3';
 

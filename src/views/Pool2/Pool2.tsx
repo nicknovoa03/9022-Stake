@@ -34,7 +34,7 @@ function Pool2() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
   let [nftMetadata, setNFTMetadata] = useState<string[] | void>([]);
   let { address, isConnected } = useAccount();
-  const blockExplorer = 'https://bscscan.com';
+  const blockExplorer = 'https://etherscan.com';
 
   // Approve
   const erc20Config = ERC20PreparedContractApprove({
