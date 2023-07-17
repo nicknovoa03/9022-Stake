@@ -1,6 +1,5 @@
 import { Box, Divider, Grid, Link, Typography } from '@mui/material';
 import Main from '../../layouts/Main/Main';
-import Pool1 from '../Pool1/Pool1';
 import { grey } from '@mui/material/colors';
 import { Web3Button } from '@web3modal/react';
 import { BigNumber, ethers } from 'ethers';
@@ -10,10 +9,9 @@ import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
 import PoolOptions from './components/poolSeclectionMUI/PoolSelection';
-import { ERC20BalanceOf, ERC721BalanceOf, NFT_ContractAddress } from '../../components/contracts/wagmiContracts';
+import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
 import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
-import { MainButton } from '../../components/form/formElements';
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
