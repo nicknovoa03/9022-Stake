@@ -29,7 +29,7 @@ function StakingConsole() {
   }, []);
 
   async function fetchData() {
-    const loadNftMetadata = await getNFTMetadata('0x69254608f6349b6A6EefF53C1ab3c009699514Ea');
+    const loadNftMetadata = await getNFTMetadata(connectedAddress!);
     setNFTMetadata(loadNftMetadata);
   }
 
