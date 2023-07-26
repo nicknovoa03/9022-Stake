@@ -13,8 +13,9 @@ import {
   AllowanceBalanceProps,
   iAI_ContractAddress
 } from './wagmiContracts';
+import { Pool } from '@mui/icons-material';
 
-export let Pool1ContractAddress: `0x${string}` = '0x15174101b46CA51dec6fceEA3475A8802a168c9C';
+export let Pool1ContractAddress: `0x${string}` = '0xb277B81694369CB690Ad58FbFA68DcFfC80F9d20';
 
 export const testPoolContract: `0x${string}` = '0xd1cc357af989564b251104b671eb6a58bf00dc06';
 
@@ -46,8 +47,8 @@ export const ERC20Allowance = (props: AllowanceBalanceProps) => {
 export const Pool1PreparedContract = (props: PoolContractProps) => {
   const { config } = usePrepareContractWrite({
     address: Pool1ContractAddress,
-    abi: TruthGPTStake.abi,
-    functionName: 'stake',
+    abi: Pool1.abi,
+    functionName: 'pool1',
     args: [props.poolAmount]
   });
   return config;
@@ -90,7 +91,7 @@ export const Pool1Balance = (props: ReadPoolContractProps) => {
   const { data } = useContractRead({
     address: Pool1ContractAddress,
     abi: Pool1.abi,
-    functionName: 'stakingbalance',
+    functionName: 'poolingBalance',
     args: [props.ownerAddress]
   });
   return data;
@@ -101,7 +102,7 @@ export const Pool1Details = (props: ReadPoolDetailsContractProps) => {
   const { data } = useContractRead({
     address: Pool1ContractAddress,
     abi: Pool1.abi,
-    functionName: 'stakingbalance',
+    functionName: 'poolerDetails',
     args: [props.ownerAddress, props.index]
   });
   return data;
@@ -110,10 +111,10 @@ export const Pool1Details = (props: ReadPoolDetailsContractProps) => {
 // Get staking detials for specifc stake with an index
 export const AllPooled1 = (props: ReadPoolContractProps) => {
   const { data } = useContractRead({
-    address: "0x15174101b46CA51dec6fceEA3475A8802a168c9C",
-    abi: TruthGPTStake.abi,
-    functionName: 'allStaked',
-    args: ["0x560A3D62d41be2639f3D660036E1d7b857967197"]
+    address: Pool1ContractAddress,
+    abi: Pool1.abi,
+    functionName: 'allPooled',
+    args: [props.ownerAddress]
   });
   return data;
 };

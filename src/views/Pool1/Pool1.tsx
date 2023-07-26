@@ -301,7 +301,7 @@ function Pool1() {
                     {stakeIsSuccessful && (
                       <>
                         <Typography variant="h6" align="center" sx={{ mt: 1 }} color="white">
-                          Successfully Lock $iAi!
+                          Successfully Locked $iAi!
                         </Typography>
                         <Link href={`${blockExplorer}/tx/${poolData?.hash}`} target="_blank" underline="hover">
                           <Typography fontSize={20} align="center" color="white">

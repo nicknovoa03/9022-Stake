@@ -204,11 +204,6 @@ function StakingConsole() {
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography align="center" fontSize={22} sx={{ mt: 1 }} color={grey[100]}>
-                        Pool Allowance: {Number(ethers.utils.formatEther(allowanceData))}
-                      </Typography>
-                    </Box>
-                    <Box>
                       <Link href="https://opensea.io/account?search[collections][0]=9022-collection" target="_blank">
                         <Typography align="center" fontSize={18} sx={{ mt: 0 }} color={grey[100]}>
                           View On Opensea
