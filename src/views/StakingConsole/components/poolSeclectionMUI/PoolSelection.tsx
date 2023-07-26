@@ -14,7 +14,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { BigNumber, ethers } from 'ethers';
 import { ERC20BalanceOf } from '../../../../components/contracts/wagmiContracts';
 import { useAccount } from 'wagmi';
-import PrestigePool from '../../../PrestigePool/PrestigePool';
+import PoolPrestige from '../../../PoolPrestige/PoolPrestige';
 
 const pools = [
   {
@@ -69,7 +69,7 @@ const prestigePool = {
   nftBackgroundReqs: ['DI', 'Prestige'],
   nftCountReqs: 1,
   size: 6,
-  href: '/PrestigePool'
+  href: '/PoolPrestige'
 };
 
 const DIPool = {
