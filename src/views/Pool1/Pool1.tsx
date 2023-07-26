@@ -216,8 +216,10 @@ function Pool1() {
                   <br /> - YEARLY Distribution on iAI THRESHOLD: 2%
                   <br /> - 90 day locking period
                   <br />
-                  <br />
-                  After successfully locking, simply return to this page to monitor your staked $iAi.
+                  <br />{' '}
+                  <Typography fontSize={12} align='center'>
+                    After successfully locking, simply return to this page to monitor your staked $iAi.
+                  </Typography>
                 </Typography>
               </Box>
               <Box
@@ -234,14 +236,8 @@ function Pool1() {
                     <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
                       Balance: {Number(ethers.utils.formatEther(balanceAmount)).toFixed(3)} $iAi
                     </Typography>
-                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
-                      9022 Held: {Number(NFTBalanceAmount)}
-                    </Typography>
-                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
-                      iAI Pool Allowance: {Number(allowanceAmount)}
-                    </Typography>
                     <Typography fontSize={16} sx={{ mb: 2 }} color={grey[100]}>
-                      Pool Balance: {Number(poolBalance).toLocaleString('en-US')} $iAi{' '}
+                      9022 Held: {Number(NFTBalanceAmount)}
                     </Typography>
                   </>
                 )}
