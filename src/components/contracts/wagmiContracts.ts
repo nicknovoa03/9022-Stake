@@ -1,24 +1,24 @@
 import { BigNumber, ethers } from 'ethers';
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
-import truthGPTStaking from './truthGPTStake.json';
-import Collection9022 from './Collection9022.json';
+import Pool1 from './ABI/iAIPool1.json';
+import Collection9022 from './ABI/Collection9022.json';
 
-type ReadStakingContractProps = {
+export type ReadPoolContractProps = {
   ownerAddress: `0x${string}` | string | undefined;
 };
 
-type ReadStakingDetailsContractProps = {
+export type ReadPoolDetailsContractProps = {
   ownerAddress: `0x${string}` | undefined;
   index: number;
 };
 
-type UnstakingContractProps = {
+export type UnpoolingContractProps = {
   index: number;
 };
 
-type StakingContractProps = {
-  stakeAmount: BigNumber;
+export type PoolContractProps = {
+  poolAmount: BigNumber;
 };
 
 type AllowanceBalanceProps = {
@@ -72,82 +72,6 @@ export const ERC721BalanceOf = (props: AllowanceBalanceProps) => {
     args: [props.ownerAddress!]
   });
   return data as BigNumber;
-};
-
-// Get staking balance for an address
-export const StakingBalance = (props: ReadStakingContractProps) => {
-  const { data } = useContractRead({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'stakingbalance',
-    args: [props.ownerAddress]
-  });
-  return data;
-};
-
-// Get staking detials for specifc stake with an index
-export const StakingDetails = (props: ReadStakingDetailsContractProps) => {
-  const { data } = useContractRead({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'stakingbalance',
-    args: [props.ownerAddress, props.index]
-  });
-  return data;
-};
-
-// Get staking detials for specifc stake with an index
-export const AllStaked = (props: ReadStakingContractProps) => {
-  const { data } = useContractRead({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'allStaked',
-    args: [props.ownerAddress]
-  });
-  return data;
-};
-
-// Initiate Stake
-export const StakePreparedContract = (props: StakingContractProps) => {
-  const { config } = usePrepareContractWrite({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'stake',
-    args: [props.stakeAmount]
-  });
-  return config;
-};
-
-// Unstake without penalty
-export const UnstakePreparedContract = (props: UnstakingContractProps) => {
-  const { config } = usePrepareContractWrite({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'unstake',
-    args: [props.index]
-  });
-  return config;
-};
-
-//Unstake with penalty
-export const WithdrawPreparedContract = (props: UnstakingContractProps) => {
-  const { config } = usePrepareContractWrite({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'withdrawpenalty',
-    args: [props.index]
-  });
-  return config;
-};
-
-// Claim Reward
-export const ClaimRewardPreparedContract = () => {
-  const { config } = usePrepareContractWrite({
-    address: StakingContractAddress,
-    abi: truthGPTStaking.abi,
-    functionName: 'claimReward'
-  });
-  return config;
 };
 
 // Approve token for tokenTransfer

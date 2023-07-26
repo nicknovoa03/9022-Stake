@@ -9,18 +9,17 @@ import { useAccount, useContractWrite, useWaitForTransaction } from 'wagmi';
 import { StakeAmountField, MainButton } from '../../components/form/formElements';
 import IAiLogo from '../../components/logos/IAiLogo';
 import theme from '../../theme';
-import StakeTable from '../../components/table/StakeTable';
+import StakeTable from './components/table/StakeTable';
 import { ContractAddress, WalletAddress } from '../../components/form/stakeElements';
 import {
   ERC20Allowance,
   ERC20BalanceOf,
   ERC20PreparedContractApprove,
   ERC721BalanceOf,
-  NFT_ContractAddress,
-  StakePreparedContract,
-  StakingContractAddress
+  NFT_ContractAddress
 } from '../../components/contracts/wagmiContracts';
 import getNFTMetadata from '../../components/nfts/NFTMetadata';
+import { Pool1ContractAddress, Pool1PreparedContract } from '../../components/contracts/pool1WagmiContract';
 
 function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
@@ -77,7 +76,7 @@ function Pool1() {
   // Locking
 
   // Pool Balance
-  const poolBalanceData = ERC20BalanceOf({ ownerAddress: StakingContractAddress! });
+  const poolBalanceData = ERC20BalanceOf({ ownerAddress: Pool1ContractAddress! });
 
   useEffect(() => {
     if (poolBalanceData) {
@@ -86,8 +85,8 @@ function Pool1() {
   }, []);
 
   // Lock
-  const stakeConfig = StakePreparedContract({
-    stakeAmount: stakeAmount
+  const stakeConfig = Pool1PreparedContract({
+    poolAmount: stakeAmount
   });
 
   const { data: stakeData, write: stakeWrite } = useContractWrite(stakeConfig);

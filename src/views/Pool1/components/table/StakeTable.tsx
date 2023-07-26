@@ -4,8 +4,8 @@ import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from '@mui/material';
-import Container from '../Container';
-import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../form/formElements';
+import Container from '../../../../components/Container';
+import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../../../../components/form/formElements';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import {
@@ -13,7 +13,7 @@ import {
   ClaimRewardPool1PreparedContract,
   Unpool1PreparedContract,
   WithdrawPool1PreparedContract
-} from '../contracts/pool1WagmiContract';
+} from '../../../../components/contracts/pool1WagmiContract';
 
 type StakeTableProps = {
   address: `0x${string}` | string | undefined;

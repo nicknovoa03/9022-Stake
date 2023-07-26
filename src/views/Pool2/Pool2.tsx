@@ -87,7 +87,7 @@ function Pool2() {
 
   // Lock
   const stakeConfig = StakePreparedContract({
-    stakeAmount: stakeAmount
+    poolAmount: stakeAmount
   });
 
   const { data: stakeData, write: stakeWrite } = useContractWrite(stakeConfig);
