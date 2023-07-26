@@ -1,7 +1,7 @@
 import React from 'react';
-import { DIPool } from '../views';
+import { PoolDI } from '../views';
 const IndexPage = () => {
-  return <DIPool />;
+  return <PoolDI />;
 };
 
 export default IndexPage;

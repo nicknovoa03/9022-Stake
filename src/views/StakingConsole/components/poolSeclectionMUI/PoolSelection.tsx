@@ -72,7 +72,7 @@ const prestigePool = {
   href: '/PoolPrestige'
 };
 
-const DIPool = {
+const PoolDI = {
   title: 'Destination Inheritance Ambassador',
   features: [
     'THRESHOLD: 300,000 iAI Tokens',
@@ -83,7 +83,7 @@ const DIPool = {
   nftBackgroundReqs: ['DI'],
   nftCountReqs: 1,
   size: 6,
-  href: '/DIPool'
+  href: '/PoolDI'
 };
 
 const PoolSelection = (ownedNfts: any) => {
@@ -309,7 +309,7 @@ const PoolSelection = (ownedNfts: any) => {
         </Box>
       </Grid>
 
-      <Grid item md={DIPool.size}>
+      <Grid item md={PoolDI.size}>
         <Box
           component={Card}
           height={1}
@@ -327,7 +327,7 @@ const PoolSelection = (ownedNfts: any) => {
             <Box marginBottom={0}>
               <Typography variant={'h4'} align="center" color={theme.palette.common.white}>
                 <Box component={'span'} fontWeight={600}>
-                  {DIPool.title}
+                  {PoolDI.title}
                 </Box>
               </Typography>
             </Box>
@@ -335,7 +335,7 @@ const PoolSelection = (ownedNfts: any) => {
             <Box marginBottom={2}>
               <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
                 {destinationInheritanceFlag &&
-                Number(ethers.utils.formatEther(iAIbalanceAmount)) >= DIPool.iAiTokenReqs ? (
+                Number(ethers.utils.formatEther(iAIbalanceAmount)) >= PoolDI.iAiTokenReqs ? (
                   <Box
                     component="span"
                     sx={{
@@ -361,7 +361,7 @@ const PoolSelection = (ownedNfts: any) => {
               </Typography>
             </Box>
             <Grid container spacing={1}>
-              {DIPool.features.map((feature, j) => (
+              {PoolDI.features.map((feature, j) => (
                 <Grid item xs={12} key={j}>
                   <Box component={ListItem} padding={0}>
                     <Box component={ListItemAvatar} minWidth={'auto !important'} marginRight={2}>
@@ -389,7 +389,7 @@ const PoolSelection = (ownedNfts: any) => {
           </CardContent>
           <Box flexGrow={1} />
           <CardActions sx={{ justifyContent: 'flex-end', padding: 4 }}>
-            <Button size={'large'} variant={'contained'} href={DIPool.href}>
+            <Button size={'large'} variant={'contained'} href={PoolDI.href}>
               Learn More
             </Button>
           </CardActions>
