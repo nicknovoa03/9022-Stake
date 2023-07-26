@@ -47,15 +47,15 @@ export default function StakeTable({ address }: StakeTableProps) {
     id: number,
     startDate: string,
     amount: string,
-    interest: number,
+    reward: number,
     penalty: number,
     endDate: string,
     stakeComplete: boolean
   ) {
-    return { id, startDate, amount, interest, penalty, endDate, stakeComplete };
+    return { id, startDate, amount, reward, penalty, endDate, stakeComplete };
   }
   const penalty = 25;
-  const interest = 2;
+  const reward = 2;
   const lockTime = 182;
 
   // Unstake
@@ -121,12 +121,12 @@ export default function StakeTable({ address }: StakeTableProps) {
           stakeComplete = true;
           setHasRewards(true);
         }
-        // Create an object with the formatted start date, amount, interest rate, penalty rate, and formatted end date
+        // Create an object with the formatted start date, amount, reward rate, penalty rate, and formatted end date
         let stakeData = createData(
           i,
           startDate.toLocaleString(),
           amount,
-          interest,
+          reward,
           penalty,
           endDate.toLocaleString(),
           stakeComplete
