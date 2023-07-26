@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
-import TokenEth from './ABI/TokenEth.json'
+import TokenEth from './ABI/TokenEth.json';
 import Collection9022 from './ABI/Collection9022.json';
 
 export type ReadPoolContractProps = {
@@ -59,5 +59,3 @@ export const ERC721BalanceOf = (props: AllowanceBalanceProps) => {
   });
   return data as BigNumber;
 };
-
-

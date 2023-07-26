@@ -235,7 +235,7 @@ function Pool1() {
               >
                 {connectedAddress && (
                   <>
-                    <Typography fontSize={16} sx={{ mb: 1 }} color={grey[100]}>
+                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
                       Balance: {Number(ethers.utils.formatEther(balanceAmount)).toFixed(3)} $iAi
                     </Typography>
                     <Typography fontSize={16} sx={{ mb: 2 }} color={grey[100]}>

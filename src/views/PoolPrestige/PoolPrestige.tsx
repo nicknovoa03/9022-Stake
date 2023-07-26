@@ -217,6 +217,8 @@ function Pool1() {
                   <br /> - 365 Day locking period
                   <br />
                   <br />
+                </Typography>
+                <Typography fontSize={12} align="center" color="white" data-aos={'flip-left'}>
                   After successfully locking, simply return to this page to monitor your staked $iAi.
                 </Typography>
               </Box>
@@ -231,7 +233,7 @@ function Pool1() {
               >
                 {connectedAddress && (
                   <>
-                    <Typography fontSize={16} sx={{ mb: 1 }} color={grey[100]}>
+                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
                       Balance: {Number(ethers.utils.formatEther(balanceAmount)).toFixed(3)} $iAi
                     </Typography>
                     <Typography fontSize={16} sx={{ mb: 2 }} color={grey[100]}>

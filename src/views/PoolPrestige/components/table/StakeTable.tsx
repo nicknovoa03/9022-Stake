@@ -87,11 +87,9 @@ export default function StakeTable({ address }: StakeTableProps) {
 
   // Staking balance
   const stakingBalanceData = Pool1Balance({ ownerAddress: address! }) as BigNumber;
-  console.log('staking balance data:', stakingBalanceData);
 
   // Staking postions
   const staked = AllPooled1({ ownerAddress: address });
-  console.log('pool data:', staked);
 
   useEffect(() => {
     if (stakingBalanceData) {

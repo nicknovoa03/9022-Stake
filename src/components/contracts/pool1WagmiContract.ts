@@ -1,9 +1,9 @@
 import { BigNumber, ethers } from 'ethers';
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
-import TruthGPTStake from './ABI/truthGPTStake.json'
+import TruthGPTStake from './ABI/truthGPTStake.json';
 import Pool1 from './ABI/iAIPool1.json';
-import TokenEth from './ABI/TokenEth.json'
+import TokenEth from './ABI/TokenEth.json';
 import {
   ReadPoolContractProps,
   ReadPoolDetailsContractProps,
