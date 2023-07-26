@@ -15,7 +15,6 @@ import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDicti
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
-  let [iAIBalanceSet, setiAIBalance] = useState(false);
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [NFTbalanceSet, setNFTBalance] = useState(false);
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
@@ -71,11 +70,6 @@ function StakingConsole() {
   useEffect(() => {
     if (iAIBalanceData) {
       setiAIBalanceAmount(iAIBalanceData);
-      if (Number(ethers.utils.formatEther(iAIbalanceAmount)) > 1) {
-        setiAIBalance(true);
-      } else {
-        setiAIBalance(false);
-      }
     }
   }, [iAIBalanceData]);
 
@@ -227,7 +221,7 @@ function StakingConsole() {
               </Typography>
             </Box>
             <Box>
-              <PoolSelection ownedNfts={ownedNfts} connectedAddress={connectedAddress} />
+              <PoolSelection ownedNfts={ownedNfts} connectedAddress={address!} />
             </Box>
           </Box>
         </Container>

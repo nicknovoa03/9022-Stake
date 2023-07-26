@@ -13,8 +13,10 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { BigNumber, ethers } from 'ethers';
 import { ERC20BalanceOf } from '../../../../components/contracts/wagmiContracts';
+import { useAccount } from 'wagmi';
+import PrestigePool from '../../../PrestigePool/PrestigePool';
 
-const mock = [
+const pools = [
   {
     title: 'Pool 1',
     features: [
@@ -54,41 +56,49 @@ const mock = [
     nftCountReqs: 3,
     size: 4,
     href: '/Pool3'
-  },
-  {
-    title: 'Prestige Ambassador',
-    features: [
-      'THRESHOLD: 200,000 iAI Tokens',
-      '9022 NFTs Required: Prestige',
-      'YEARLY Distribution on iAI THRESHOLD: 10%'
-    ],
-    iAiTokenReqs: 200000,
-    nftBackgroundReqs: ['DI', 'Prestige'],
-    nftCountReqs: 100,
-    size: 6,
-    href: '/PrestigePool'
-  },
-  {
-    title: 'Destination Inheritance Ambassador',
-    features: [
-      'THRESHOLD: 300,000 iAI Tokens',
-      '9022 NFTs Required: Destination Inheritance',
-      'YEARLY Distribution on iAI THRESHOLD: 12%'
-    ],
-    iAiTokenReqs: 300000,
-    nftBackgroundReqs: ['DI'],
-    nftCountReqs: 100,
-    size: 6,
-    href: '/DIPool'
   }
 ];
+const prestigePool = {
+  title: 'Prestige Ambassador',
+  features: [
+    'THRESHOLD: 200,000 iAI Tokens',
+    '9022 NFTs Required: Prestige',
+    'YEARLY Distribution on iAI THRESHOLD: 10%'
+  ],
+  iAiTokenReqs: 200000,
+  nftBackgroundReqs: ['DI', 'Prestige'],
+  nftCountReqs: 1,
+  size: 6,
+  href: '/PrestigePool'
+};
 
-const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefined) => {
+const DIPool = {
+  title: 'Destination Inheritance Ambassador',
+  features: [
+    'THRESHOLD: 300,000 iAI Tokens',
+    '9022 NFTs Required: Destination Inheritance',
+    'YEARLY Distribution on iAI THRESHOLD: 12%'
+  ],
+  iAiTokenReqs: 300000,
+  nftBackgroundReqs: ['DI'],
+  nftCountReqs: 1,
+  size: 6,
+  href: '/DIPool'
+};
+
+const PoolSelection = (ownedNfts: any) => {
   const theme = useTheme();
+  let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [nftCount, setNftCount] = useState(0);
   let [prestigeFlag, setPrestigeFlag] = useState<Boolean>(false);
   let [destinationInheritanceFlag, setDestinationInheritanceFlag] = useState<Boolean>(false);
+  let { address, isConnected } = useAccount();
+
+  // Save Connected Address to state
+  useEffect(() => {
+    setConnectedAddress(address);
+  }, [isConnected]);
 
   // User erc20 Balance
   const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
@@ -96,14 +106,14 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
     if (iAIBalanceData) {
       setiAIBalanceAmount(iAIBalanceData);
     }
-  }, [iAIBalanceData]);
+  });
 
   // Set NFT data
   useEffect(() => {
     let sum = 0;
     let nfts: any = Object.values(ownedNfts)[0];
     //setNftCount(Object.values(ownedNfts)[0]);
-    console.log('owned nfts:', nfts);
+    //console.log('owned nfts:', nfts);
     //console.log('nft count:', Object.keys(nfts));
     for (const key in nfts) {
       if (key == 'Prestige') {
@@ -115,14 +125,14 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
       sum += nfts[key];
     }
     setNftCount(sum);
-    console.log('nftCount:', nftCount);
-    console.log('prestige flag:', prestigeFlag);
-    console.log('DI flag:', destinationInheritanceFlag);
+    //console.log('nftCount:', nftCount);
+    //console.log('prestige flag:', prestigeFlag);
+    //console.log('DI flag:', destinationInheritanceFlag);
   });
 
   return (
     <Grid container spacing={4}>
-      {mock.map((item, i) => (
+      {pools.map((item, i) => (
         <Grid item md={item.size} key={i}>
           <Box
             component={Card}
@@ -148,8 +158,7 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
 
               <Box marginBottom={2}>
                 <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
-                  {nftCount >= item.nftCountReqs &&
-                  Number(ethers.utils.formatEther(iAIbalanceAmount)) >= item.iAiTokenReqs ? (
+                  {nftCount >= item.nftCountReqs ? (
                     <Box
                       component="span"
                       sx={{
@@ -169,7 +178,7 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
                       }}
                       fontWeight={600}
                     >
-                      Ineligible
+                      ineligible
                     </Box>
                   )}
                 </Typography>
@@ -211,6 +220,180 @@ const PoolSelection = (ownedNfts: any, connectedAddress: `0x${string}` | undefin
           </Box>
         </Grid>
       ))}
+
+      <Grid item md={prestigePool.size}>
+        <Box
+          component={Card}
+          height={1}
+          display={'flex'}
+          flexDirection={'column'}
+          bgcolor={theme.palette.common.black}
+          sx={{ borderRadius: 3, border: '1px solid white' }}
+          data-aos={'flip-left'}
+        >
+          <CardContent
+            sx={{
+              padding: 4
+            }}
+          >
+            <Box marginBottom={0}>
+              <Typography variant={'h4'} align="center" color={theme.palette.common.white}>
+                <Box component={'span'} fontWeight={600}>
+                  {prestigePool.title}
+                </Box>
+              </Typography>
+            </Box>
+
+            <Box marginBottom={2}>
+              <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
+                {prestigeFlag && Number(ethers.utils.formatEther(iAIbalanceAmount)) >= prestigePool.iAiTokenReqs ? (
+                  <Box
+                    component="span"
+                    sx={{
+                      padding: 0.5,
+                      color: 'green'
+                    }}
+                    fontWeight={600}
+                  >
+                    Eligible
+                  </Box>
+                ) : (
+                  <Box
+                    component="span"
+                    sx={{
+                      padding: 0.5,
+                      color: 'red'
+                    }}
+                    fontWeight={600}
+                  >
+                    ineligible
+                  </Box>
+                )}
+              </Typography>
+            </Box>
+            <Grid container spacing={1}>
+              {prestigePool.features.map((feature, j) => (
+                <Grid item xs={12} key={j}>
+                  <Box component={ListItem} padding={0}>
+                    <Box component={ListItemAvatar} minWidth={'auto !important'} marginRight={2}>
+                      <Box component={Avatar} bgcolor={theme.palette.primary.main} width={20} height={20}>
+                        <svg
+                          width={12}
+                          height={12}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </Box>
+                    </Box>
+                    <ListItemText primary={feature} style={{ color: theme.palette.common.white }} />
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
+          <Box flexGrow={1} />
+
+          <CardActions sx={{ justifyContent: 'flex-end', padding: 4 }}>
+            <Button size={'large'} variant={'contained'} href={prestigePool.href}>
+              Learn More
+            </Button>
+          </CardActions>
+        </Box>
+      </Grid>
+
+      <Grid item md={DIPool.size}>
+        <Box
+          component={Card}
+          height={1}
+          display={'flex'}
+          flexDirection={'column'}
+          bgcolor={theme.palette.common.black}
+          sx={{ borderRadius: 3, border: '1px solid white' }}
+          data-aos={'flip-left'}
+        >
+          <CardContent
+            sx={{
+              padding: 4
+            }}
+          >
+            <Box marginBottom={0}>
+              <Typography variant={'h4'} align="center" color={theme.palette.common.white}>
+                <Box component={'span'} fontWeight={600}>
+                  {DIPool.title}
+                </Box>
+              </Typography>
+            </Box>
+
+            <Box marginBottom={2}>
+              <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
+                {destinationInheritanceFlag &&
+                Number(ethers.utils.formatEther(iAIbalanceAmount)) >= DIPool.iAiTokenReqs ? (
+                  <Box
+                    component="span"
+                    sx={{
+                      padding: 0.5,
+                      color: 'green'
+                    }}
+                    fontWeight={600}
+                  >
+                    Eligible
+                  </Box>
+                ) : (
+                  <Box
+                    component="span"
+                    sx={{
+                      padding: 0.5,
+                      color: 'red'
+                    }}
+                    fontWeight={600}
+                  >
+                    ineligible
+                  </Box>
+                )}
+              </Typography>
+            </Box>
+            <Grid container spacing={1}>
+              {DIPool.features.map((feature, j) => (
+                <Grid item xs={12} key={j}>
+                  <Box component={ListItem} padding={0}>
+                    <Box component={ListItemAvatar} minWidth={'auto !important'} marginRight={2}>
+                      <Box component={Avatar} bgcolor={theme.palette.primary.main} width={20} height={20}>
+                        <svg
+                          width={12}
+                          height={12}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </Box>
+                    </Box>
+                    <ListItemText primary={feature} style={{ color: theme.palette.common.white }} />
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </CardContent>
+          <Box flexGrow={1} />
+          <CardActions sx={{ justifyContent: 'flex-end', padding: 4 }}>
+            <Button size={'large'} variant={'contained'} href={DIPool.href}>
+              Learn More
+            </Button>
+          </CardActions>
+        </Box>
+      </Grid>
     </Grid>
   );
 };
