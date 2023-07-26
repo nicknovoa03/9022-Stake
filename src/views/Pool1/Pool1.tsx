@@ -217,9 +217,9 @@ function Pool1() {
                   <br /> - 90 day locking period
                   <br />
                   <br />{' '}
-                  <Typography fontSize={12} align='center'>
-                    After successfully locking, simply return to this page to monitor your staked $iAi.
-                  </Typography>
+                </Typography>
+                <Typography fontSize={12} align="center" color="white" data-aos={'flip-left'}>
+                  After successfully locking, simply return to this page to monitor your staked $iAi.
                 </Typography>
               </Box>
               <Box
