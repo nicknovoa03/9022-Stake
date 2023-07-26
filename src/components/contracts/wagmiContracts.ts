@@ -29,11 +29,11 @@ type erc20ContractAddressApproveProps = {
   tokenAmount: BigNumber;
 };
 
-export let iAI_ContractAddress: `0x${string}` | undefined = '0x080CfFF23f0742EAb160561Dc5bF4d64Fa8822F6';
-export let NFT_ContractAddress: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b';
-export let StakingContractAddress: `0x${string}` | undefined = '0x4b12A3600916f923545786158f3F8569E9B96bE3';
+export let iAI_ContractAddress: `0x${string}` | undefined = '0x6dDe4fFD6dB302Bc9a46850f61399e082f6c2122';
+export let NFT_ContractAddress: `0x${string}` | undefined = '0x853806fCa5Ee8a6Ac99Dc84a8e3596A4F6541796';
+export let StakingContractAddress: `0x${string}` | undefined = '0x60db3b3fef8aee5e1dfb0db9a5db4d4ade8f99a1';
 
-let testERC20: `0x${string}` | undefined = '0xB83cA21FED7054bAE76613cEd0215FaA06706361';
+let testERC20: `0x${string}` | undefined = '0x81cBE2317289Aa4d8B3c1e363046619317F63ff6';
 let testNFT: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b';
 let testStakingContract: `0x${string}` | undefined = '0x60db3b3fef8aee5e1dfb0db9a5db4d4ade8f99a1';
 
