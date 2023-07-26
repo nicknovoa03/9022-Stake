@@ -11,15 +11,14 @@ import IAiLogo from '../../components/logos/IAiLogo';
 import theme from '../../theme';
 import StakeTable from './components/table/StakeTable';
 import { ContractAddress, WalletAddress } from '../../components/form/stakeElements';
+import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
+import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import {
   ERC20Allowance,
-  ERC20BalanceOf,
-  ERC20PreparedContractApprove,
-  ERC721BalanceOf,
-  NFT_ContractAddress
-} from '../../components/contracts/wagmiContracts';
-import getNFTMetadata from '../../components/nfts/NFTMetadata';
-import { Pool1ContractAddress, Pool1PreparedContract } from '../../components/contracts/pool1WagmiContract';
+  Pool1ContractAddress,
+  Pool1PreparedContract,
+  Pool1PreparedContractApprove
+} from '../../components/contracts/pool1WagmiContract';
 
 function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
@@ -29,38 +28,45 @@ function Pool1() {
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [allowanceSet, setAllowance] = useState(false);
   let [allowanceAmount, setAllowanceAmount] = useState<number>(0);
-  let [stakeAmount, setStakeAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [poolAmount, setPoolAmount] = useState<BigNumber>(BigNumber.from(0));
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
-  let [nftMetadata, setNFTMetadata] = useState<string[] | void>([]);
   let { address, isConnected } = useAccount();
   const blockExplorer = 'https://etherscan.com';
 
-  // Approve
-  const erc20Config = ERC20PreparedContractApprove({
-    tokenAmount: ethers.utils.parseEther((100000000).toString())
-  });
-  const { data: dataERC20Approve, write: writeERC20Approve } = useContractWrite(erc20Config);
-
-  const { isLoading: isLoadingERC20Approve } = useWaitForTransaction({
-    hash: dataERC20Approve?.hash
-  });
+  // User Balance
+  const balanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
 
   // Allowance
   const allowanceData = ERC20Allowance({
     ownerAddress: connectedAddress
   });
 
-  useEffect(() => {
-    if (allowanceData) {
-      setAllowanceAmount(parseFloat(ethers.utils.formatEther(allowanceData)));
-      if (allowanceAmount > 0) {
-        setAllowance(true);
-      }
-    }
-  }, [allowanceData, allowanceAmount]);
+  // Pool Balance
+  const poolBalanceData = ERC20BalanceOf({ ownerAddress: Pool1ContractAddress! });
 
-  // User Balance
-  const balanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
+  // Approve
+  const approveConfig = Pool1PreparedContractApprove({
+    tokenAmount: ethers.utils.parseEther((100000000).toString())
+  });
+  const { data: approveData, write: writeERC20Approve } = useContractWrite(approveConfig);
+
+  const { isLoading: isLoadingERC20Approve, isSuccess: approveIsSuccessful } = useWaitForTransaction({
+    hash: approveData?.hash
+  });
+
+  // Lock
+  const poolConfig = Pool1PreparedContract({
+    poolAmount: poolAmount
+  });
+
+  const { data: poolData, write: stakeWrite } = useContractWrite(poolConfig);
+
+  const { isLoading: stakeIsLoading, isSuccess: stakeIsSuccessful } = useWaitForTransaction({
+    hash: poolData?.hash
+  });
+
+  // User erc721Balance
+  const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
 
   useEffect(() => {
     if (balanceData) {
@@ -71,12 +77,16 @@ function Pool1() {
         setBalance(false);
       }
     }
-  }, [balanceData, stakeAmount, balanceAmount]);
+  }, [balanceData]);
 
-  // Locking
-
-  // Pool Balance
-  const poolBalanceData = ERC20BalanceOf({ ownerAddress: Pool1ContractAddress! });
+  useEffect(() => {
+    if (allowanceData) {
+      setAllowanceAmount(parseFloat(ethers.utils.formatEther(allowanceData)));
+      if (allowanceAmount > 0) {
+        setAllowance(true);
+      }
+    }
+  }, [allowanceData, allowanceAmount]);
 
   useEffect(() => {
     if (poolBalanceData) {
@@ -84,23 +94,6 @@ function Pool1() {
     }
   }, []);
 
-  // Lock
-  const stakeConfig = Pool1PreparedContract({
-    poolAmount: stakeAmount
-  });
-
-  const { data: stakeData, write: stakeWrite } = useContractWrite(stakeConfig);
-
-  const { isLoading: stakeIsLoading, isSuccess: stakeIsSuccessful } = useWaitForTransaction({
-    hash: stakeData?.hash
-  });
-
-  useEffect(() => {
-    setConnectedAddress(address);
-  }, [isConnected]);
-
-  // User erc721Balance
-  const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
   useEffect(() => {
     if (NFTBalanceData) {
       setNFTBalanceAmount(NFTBalanceData);
@@ -112,22 +105,17 @@ function Pool1() {
     }
   }, [NFTBalanceData]);
 
-  // NFT's Owned
   useEffect(() => {
-    async () => {
-      const connectedAddress = NFT_ContractAddress!;
-      const nftMetadata = await getNFTMetadata(connectedAddress);
-      setNFTMetadata(nftMetadata);
-    };
+    setConnectedAddress(address);
   }, [isConnected]);
 
   const handleStakeChange = (event: { target: { value: any } }) => {
     const { value } = event.target;
     if (isPositiveFloat(value)) {
       const stakeAmount = ethers.utils.parseEther(value);
-      setStakeAmount(stakeAmount);
+      setPoolAmount(stakeAmount);
     } else {
-      setStakeAmount(ethers.BigNumber.from(0));
+      setPoolAmount(ethers.BigNumber.from(0));
     }
   };
 
@@ -135,9 +123,6 @@ function Pool1() {
     return /^\d+(\.\d+)?$/.test(value) && Number(value) >= 1;
   }
 
-  async function printMetadata() {
-    await console.log(getNFTMetadata(connectedAddress!));
-  }
   return (
     <>
       <Main>
@@ -246,11 +231,17 @@ function Pool1() {
               >
                 {connectedAddress && (
                   <>
-                    <Typography fontSize={16} sx={{ mb: 1 }} color={grey[100]}>
+                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
                       Balance: {Number(ethers.utils.formatEther(balanceAmount)).toFixed(3)} $iAi
                     </Typography>
-                    <Typography fontSize={16} sx={{ mb: 2 }} color={grey[100]}>
+                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
                       9022 Held: {Number(NFTBalanceAmount)}
+                    </Typography>
+                    <Typography fontSize={16} sx={{ mb: 0 }} color={grey[100]}>
+                      iAI Pool Allowance: {Number(allowanceAmount)}
+                    </Typography>
+                    <Typography fontSize={16} sx={{ mb: 2 }} color={grey[100]}>
+                      Pool Balance: {Number(poolBalance).toLocaleString('en-US')} $iAi{' '}
                     </Typography>
                   </>
                 )}
@@ -283,19 +274,36 @@ function Pool1() {
                         disabled={!writeERC20Approve || isLoadingERC20Approve}
                         onClick={() => writeERC20Approve?.()}
                       >
-                        {isLoadingERC20Approve ? 'Approving...' : `Approve $iAi`}
+                        {isLoadingERC20Approve ? 'Approving...' : `Approve  $iAi`}
                       </MainButton>
                     ) : (
-                      <MainButton fullWidth variant="contained" disabled={!stakeWrite || stakeIsLoading}>
-                        {stakeIsLoading ? 'Locking... ' : `Locking Disabled`}
+                      <MainButton
+                        fullWidth
+                        variant="contained"
+                        disabled={!stakeWrite || stakeIsLoading}
+                        onClick={() => stakeWrite?.()}
+                      >
+                        {stakeIsLoading ? 'Locking... ' : `Lock ${ethers.utils.formatEther(poolAmount)} $iAI`}
                       </MainButton>
+                    )}
+                    {approveIsSuccessful && (
+                      <>
+                        <Typography variant="h6" align="center" sx={{ mt: 1 }} color="white">
+                          Successfully Approved $iAi!
+                        </Typography>
+                        <Link href={`${blockExplorer}/tx/${approveData?.hash}`} target="_blank" underline="hover">
+                          <Typography fontSize={20} align="center" color="white">
+                            View Transaction
+                          </Typography>
+                        </Link>
+                      </>
                     )}
                     {stakeIsSuccessful && (
                       <>
                         <Typography variant="h6" align="center" sx={{ mt: 1 }} color="white">
                           Successfully Lock $iAi!
                         </Typography>
-                        <Link href={`${blockExplorer}/tx/${stakeData?.hash}`} target="_blank" underline="hover">
+                        <Link href={`${blockExplorer}/tx/${poolData?.hash}`} target="_blank" underline="hover">
                           <Typography fontSize={20} align="center" color="white">
                             View Transaction
                           </Typography>
@@ -318,7 +326,7 @@ function Pool1() {
             </Box>
           </Box>
         </Container>
-        <StakeTable address={address} />
+        <StakeTable address={connectedAddress} />
       </Main>
     </>
   );

@@ -5,18 +5,25 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from '@mui/material';
 import Container from '../../../../components/Container';
-import { MainButton, StakeCell, StakeTableContainer, UnstakeButton, WithDrawButton } from '../../../../components/form/formElements';
+import {
+  MainButton,
+  StakeCell,
+  StakeTableContainer,
+  UnstakeButton,
+  WithDrawButton
+} from '../../../../components/form/formElements';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import {
   AllPooled1,
   ClaimRewardPool1PreparedContract,
+  Pool1Balance,
   Unpool1PreparedContract,
   WithdrawPool1PreparedContract
 } from '../../../../components/contracts/pool1WagmiContract';
 
 type StakeTableProps = {
-  address: `0x${string}` | string | undefined;
+  address: `0x${string}` | undefined;
 };
 
 interface StakeData {
@@ -47,11 +54,9 @@ export default function StakeTable({ address }: StakeTableProps) {
   ) {
     return { id, startDate, amount, interest, penalty, endDate, stakeComplete };
   }
-  const penalty = 0;
-  const interest = 7.5;
-
-  // Staking balance
-  const stakingBalanceData = AllPooled1({ ownerAddress: address! }) as BigNumber;
+  const penalty = 25;
+  const interest = 2;
+  const lockTime = 182;
 
   // Unstake
   const unstakeConfig = Unpool1PreparedContract({
@@ -80,7 +85,13 @@ export default function StakeTable({ address }: StakeTableProps) {
     hash: claimRewardsData?.hash
   });
 
+  // Staking balance
+  const stakingBalanceData = Pool1Balance({ ownerAddress: address! }) as BigNumber;
+  console.log('staking balance data:', stakingBalanceData);
+
+  // Staking postions
   const staked = AllPooled1({ ownerAddress: address });
+  console.log('pool data:', staked);
 
   useEffect(() => {
     if (stakingBalanceData) {
@@ -103,7 +114,7 @@ export default function StakeTable({ address }: StakeTableProps) {
         let startDate = new Date(staked[i].timestamp.toNumber() * 1000);
         let endDate = new Date(staked[i].timestamp.toNumber() * 1000);
         // Add 30 days to the end date
-        endDate.setDate(endDate.getDate());
+        endDate.setDate(endDate.getDate() + lockTime);
         // check if end date is passed the current datez
         let stakeComplete = false;
         if (endDate < currentDate) {

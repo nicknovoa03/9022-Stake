@@ -12,6 +12,7 @@ import PoolSelection from './components/poolSeclectionMUI/PoolSelection';
 import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
 import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
+import { ERC20Allowance } from '../../components/contracts/pool1WagmiContract';
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
@@ -64,6 +65,11 @@ function StakingConsole() {
     // set state
     setOwnedNfts(nftBackgroundDictionary);
   }
+
+  // Allowance
+  const allowanceData = ERC20Allowance({
+    ownerAddress: connectedAddress
+  });
 
   // User erc20 Balance
   const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
@@ -195,6 +201,11 @@ function StakingConsole() {
                     <Box>
                       <Typography align="center" fontSize={22} sx={{ mt: 1 }} color={grey[100]}>
                         9022 Held: {Number(NFTBalanceAmount)}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography align="center" fontSize={22} sx={{ mt: 1 }} color={grey[100]}>
+                        Pool Allowance: {Number(ethers.utils.formatEther(allowanceData))}
                       </Typography>
                     </Box>
                     <Box>

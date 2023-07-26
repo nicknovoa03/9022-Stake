@@ -1,37 +1,54 @@
 import { BigNumber, ethers } from 'ethers';
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
+import TruthGPTStake from './ABI/truthGPTStake.json'
 import Pool1 from './ABI/iAIPool1.json';
-import Collection9022 from './ABI/Collection9022.json';
+import TokenEth from './ABI/TokenEth.json'
 import {
   ReadPoolContractProps,
   ReadPoolDetailsContractProps,
   PoolContractProps,
-  UnpoolingContractProps
+  UnpoolingContractProps,
+  erc20ContractAddressApproveProps,
+  AllowanceBalanceProps,
+  iAI_ContractAddress
 } from './wagmiContracts';
 
-export let iAI_ContractAddress: `0x${string}` | undefined = '0x6dDe4fFD6dB302Bc9a46850f61399e082f6c2122';
-export let NFT_ContractAddress: `0x${string}` | undefined = '0x853806fCa5Ee8a6Ac99Dc84a8e3596A4F6541796';
-export let Pool1ContractAddress: `0x${string}` | undefined = '0x60db3b3fef8aee5e1dfb0db9a5db4d4ade8f99a1';
+export let Pool1ContractAddress: `0x${string}` = '0x15174101b46CA51dec6fceEA3475A8802a168c9C';
 
-let testERC20: `0x${string}` | undefined = '0x81cBE2317289Aa4d8B3c1e363046619317F63ff6';
-let testNFT: `0x${string}` | undefined = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b';
-let testPoolContract: `0x${string}` | undefined = '0x60db3b3fef8aee5e1dfb0db9a5db4d4ade8f99a1';
+export const testPoolContract: `0x${string}` = '0xd1cc357af989564b251104b671eb6a58bf00dc06';
 
-iAI_ContractAddress = testERC20;
-NFT_ContractAddress = testNFT;
-Pool1ContractAddress = testPoolContract;
+//Pool1ContractAddress = testPoolContract;
+
+// Approve token for tokenTransfer
+export const Pool1PreparedContractApprove = (props: erc20ContractAddressApproveProps) => {
+  const { config } = usePrepareContractWrite({
+    address: iAI_ContractAddress,
+    abi: TokenEth.abi,
+    functionName: 'approve',
+    args: [Pool1ContractAddress!, props.tokenAmount]
+  });
+  return config;
+};
+
+// Get Allowance for token owner and spender
+export const ERC20Allowance = (props: AllowanceBalanceProps) => {
+  const { data } = useContractRead({
+    address: iAI_ContractAddress,
+    abi: TokenEth.abi,
+    functionName: 'allowance',
+    args: [props.ownerAddress, Pool1ContractAddress]
+  });
+  return data as BigNumber;
+};
 
 // Initiate Stake
 export const Pool1PreparedContract = (props: PoolContractProps) => {
   const { config } = usePrepareContractWrite({
     address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'pool1',
-    args: [props.poolAmount],
-    overrides: {
-      value: ethers.utils.parseEther('.01')
-    }
+    abi: TruthGPTStake.abi,
+    functionName: 'stake',
+    args: [props.poolAmount]
   });
   return config;
 };
@@ -93,10 +110,10 @@ export const Pool1Details = (props: ReadPoolDetailsContractProps) => {
 // Get staking detials for specifc stake with an index
 export const AllPooled1 = (props: ReadPoolContractProps) => {
   const { data } = useContractRead({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
+    address: "0x15174101b46CA51dec6fceEA3475A8802a168c9C",
+    abi: TruthGPTStake.abi,
     functionName: 'allStaked',
-    args: [props.ownerAddress]
+    args: ["0x560A3D62d41be2639f3D660036E1d7b857967197"]
   });
   return data;
 };
