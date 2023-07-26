@@ -158,7 +158,8 @@ const PoolSelection = (ownedNfts: any) => {
 
               <Box marginBottom={2}>
                 <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
-                  {nftCount >= item.nftCountReqs ? (
+                  {nftCount >= item.nftCountReqs &&
+                  Number(ethers.utils.formatEther(iAIbalanceAmount)) >= item.iAiTokenReqs ? (
                     <Box
                       component="span"
                       sx={{
