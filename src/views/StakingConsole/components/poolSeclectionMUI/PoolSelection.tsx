@@ -14,7 +14,6 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { BigNumber, ethers } from 'ethers';
 import { ERC20BalanceOf } from '../../../../components/contracts/wagmiContracts';
 import { useAccount } from 'wagmi';
-import PoolPrestige from '../../../PoolPrestige/PoolPrestige';
 
 const pools = [
   {

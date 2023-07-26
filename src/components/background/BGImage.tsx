@@ -1,4 +1,3 @@
-import { Box } from '@mui/system';
 import Image from 'next/image';
 import background from '../../../../../public/Banner.jpg';
 

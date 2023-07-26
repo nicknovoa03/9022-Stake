@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 export default async function getNFTMetadata(address: string): Promise<string[]> {
   const MainnetNftContractAddress = '0x853806fCa5Ee8a6Ac99Dc84a8e3596A4F6541796';
-  const TestnetNftContractAddress = '0x98F889e00f2AA49c5c30938f555B0488d4f59B8b';
   const options: AxiosRequestConfig = {
     method: 'GET',
     url: `https://api.nftport.xyz/v0/accounts/${address}`,

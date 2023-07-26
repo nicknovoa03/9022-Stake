@@ -12,7 +12,6 @@ import theme from '../../theme';
 import StakeTable from './components/table/StakeTable';
 import { ContractAddress, WalletAddress } from '../../components/form/stakeElements';
 import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
-import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import {
   ERC20Allowance,
   Pool1ContractAddress,
@@ -22,9 +21,7 @@ import {
 
 function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
-  let [balanceSet, setBalance] = useState(false);
   let [balanceAmount, setBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
-  let [NFTbalanceSet, setNFTBalance] = useState(false);
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [allowanceSet, setAllowance] = useState(false);
   let [allowanceAmount, setAllowanceAmount] = useState<number>(0);
@@ -71,11 +68,6 @@ function Pool1() {
   useEffect(() => {
     if (balanceData) {
       setBalanceAmount(balanceData);
-      if (Number(ethers.utils.formatEther(balanceAmount)) > 1) {
-        setBalance(true);
-      } else {
-        setBalance(false);
-      }
     }
   }, [balanceData]);
 
@@ -97,11 +89,6 @@ function Pool1() {
   useEffect(() => {
     if (NFTBalanceData) {
       setNFTBalanceAmount(NFTBalanceData);
-      if (Number(ethers.utils.formatEther(NFTBalanceData)) > 1) {
-        setNFTBalance(true);
-      } else {
-        setNFTBalance(false);
-      }
     }
   }, [NFTBalanceData]);
 

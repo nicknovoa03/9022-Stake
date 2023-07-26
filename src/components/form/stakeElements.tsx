@@ -3,7 +3,7 @@ import { AddressLink } from './formElements';
 import { Pool1ContractAddress } from '../contracts/pool1WagmiContract';
 
 const blockExplorer = 'https://etherscan.com/address/';
-const sepoliaExplorer = 'https://sepolia.etherscan.io/address/';
+//const sepoliaExplorer = 'https://sepolia.etherscan.io/address/';
 
 type walletAddress = { address: `0x${string}` | string | undefined };
 export const WalletAddress = (props: walletAddress) => {

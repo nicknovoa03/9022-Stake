@@ -1,9 +1,6 @@
-import { BigNumber, ethers } from 'ethers';
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
-import TruthGPTStake from './ABI/truthGPTStake.json';
 import Pool1 from './ABI/iAIPool1.json';
-import TokenEth from './ABI/TokenEth.json';
 import {
   ReadPoolContractProps,
   ReadPoolDetailsContractProps,
@@ -13,7 +10,6 @@ import {
   AllowanceBalanceProps,
   iAI_ContractAddress
 } from './wagmiContracts';
-import { Pool } from '@mui/icons-material';
 
 export let Pool1ContractAddress: `0x${string}` = '0xb277B81694369CB690Ad58FbFA68DcFfC80F9d20';
 
@@ -25,7 +21,7 @@ export const testPoolContract: `0x${string}` = '0xd1cc357af989564b251104b671eb6a
 export const Pool1PreparedContractApprove = (props: erc20ContractAddressApproveProps) => {
   const { config } = usePrepareContractWrite({
     address: iAI_ContractAddress,
-    abi: TokenEth.abi,
+    abi: erc20ABI,
     functionName: 'approve',
     args: [Pool1ContractAddress!, props.tokenAmount]
   });
@@ -36,11 +32,11 @@ export const Pool1PreparedContractApprove = (props: erc20ContractAddressApproveP
 export const ERC20Allowance = (props: AllowanceBalanceProps) => {
   const { data } = useContractRead({
     address: iAI_ContractAddress,
-    abi: TokenEth.abi,
+    abi: erc20ABI,
     functionName: 'allowance',
-    args: [props.ownerAddress, Pool1ContractAddress]
+    args: [props.ownerAddress!, Pool1ContractAddress]
   });
-  return data as BigNumber;
+  return data;
 };
 
 // Initiate Stake

@@ -21,9 +21,7 @@ import {
 
 function Pool2() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
-  let [balanceSet, setBalance] = useState(false);
   let [balanceAmount, setBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
-  let [NFTbalanceSet, setNFTBalance] = useState(false);
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [allowanceSet, setAllowance] = useState(false);
   let [allowanceAmount, setAllowanceAmount] = useState<number>(0);
@@ -70,11 +68,6 @@ function Pool2() {
   useEffect(() => {
     if (balanceData) {
       setBalanceAmount(balanceData);
-      if (Number(ethers.utils.formatEther(balanceAmount)) > 1) {
-        setBalance(true);
-      } else {
-        setBalance(false);
-      }
     }
   }, [balanceData]);
 
@@ -96,11 +89,6 @@ function Pool2() {
   useEffect(() => {
     if (NFTBalanceData) {
       setNFTBalanceAmount(NFTBalanceData);
-      if (Number(ethers.utils.formatEther(NFTBalanceData)) > 1) {
-        setNFTBalance(true);
-      } else {
-        setNFTBalance(false);
-      }
     }
   }, [NFTBalanceData]);
 
@@ -275,6 +263,18 @@ function Pool2() {
                       <MainButton fullWidth variant="contained" disabled={!stakeWrite || stakeIsLoading}>
                         {stakeIsLoading ? 'Locking... ' : `Locking Disabled`}
                       </MainButton>
+                    )}
+                    {approveIsSuccessful && (
+                      <>
+                        <Typography variant="h6" align="center" sx={{ mt: 1 }} color="white">
+                          Successfully Approved $iAi!
+                        </Typography>
+                        <Link href={`${blockExplorer}/tx/${approveData?.hash}`} target="_blank" underline="hover">
+                          <Typography fontSize={20} align="center" color="white">
+                            View Transaction
+                          </Typography>
+                        </Link>
+                      </>
                     )}
                     {stakeIsSuccessful && (
                       <>

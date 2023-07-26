@@ -1,6 +1,5 @@
-import { BigNumber, ethers } from 'ethers';
-import { usePrepareContractWrite, useContractRead } from 'wagmi';
-import { erc20ABI } from 'wagmi';
+import { BigNumber,  } from 'ethers';
+import {  useContractRead } from 'wagmi';
 import TokenEth from './ABI/TokenEth.json';
 import Collection9022 from './ABI/Collection9022.json';
 

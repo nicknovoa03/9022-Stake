@@ -6,7 +6,7 @@ import Page from '../components/Page';
 import { Web3Modal } from '@web3modal/react';
 import { AppProps } from 'next/app';
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { sepolia, mainnet } from 'wagmi/chains';
+import { mainnet } from 'wagmi/chains';
 import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3modal/ethereum';
 
 // 1. Get projectID at https://cloud.walletconnect.com

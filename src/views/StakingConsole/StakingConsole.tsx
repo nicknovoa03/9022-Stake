@@ -12,12 +12,10 @@ import PoolSelection from './components/poolSeclectionMUI/PoolSelection';
 import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
 import getNFTMetadata from '../../components/nfts/NFTMetadata';
 import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
-import { ERC20Allowance } from '../../components/contracts/pool1WagmiContract';
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
-  let [NFTbalanceSet, setNFTBalance] = useState(false);
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [nftMetadata, setNFTMetadata] = useState<string[]>([]);
   let [ownedNfts, setOwnedNfts] = useState<{ [key: string]: number }>({});
@@ -66,11 +64,6 @@ function StakingConsole() {
     setOwnedNfts(nftBackgroundDictionary);
   }
 
-  // Allowance
-  const allowanceData = ERC20Allowance({
-    ownerAddress: connectedAddress
-  });
-
   // User erc20 Balance
   const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
   useEffect(() => {
@@ -84,11 +77,6 @@ function StakingConsole() {
   useEffect(() => {
     if (NFTBalanceData) {
       setNFTBalanceAmount(NFTBalanceData);
-      if (Number(ethers.utils.formatEther(NFTBalanceData)) > 1) {
-        setNFTBalance(true);
-      } else {
-        setNFTBalance(false);
-      }
     }
   }, [NFTBalanceData]);
 
@@ -96,10 +84,6 @@ function StakingConsole() {
   useEffect(() => {
     setConnectedAddress(address);
   }, [isConnected]);
-
-  async function printMetadata() {
-    console.log(nftMetadata);
-  }
 
   return (
     <>

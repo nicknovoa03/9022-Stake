@@ -5,13 +5,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Box, Typography } from '@mui/material';
 import Container from '../../../../components/Container';
-import {
-  MainButton,
-  StakeCell,
-  StakeTableContainer,
-  UnstakeButton,
-  WithDrawButton
-} from '../../../../components/form/formElements';
+import { MainButton, StakeCell, StakeTableContainer, WithDrawButton } from '../../../../components/form/formElements';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import {
@@ -59,13 +53,14 @@ export default function StakeTable({ address }: StakeTableProps) {
   const lockTime = 182;
 
   // Unstake
+  // Unstake
   const unstakeConfig = Unpool1PreparedContract({
     index: selectedIndex!
   });
 
   const { data: unstakeData, write: unstakeWrite } = useContractWrite(unstakeConfig);
 
-  const { isLoading: unstakeIsLoading, isSuccess: unStakeIsSuccessful } = useWaitForTransaction({
+  const { isLoading: unstakeIsLoading } = useWaitForTransaction({
     hash: unstakeData?.hash
   });
 
@@ -74,14 +69,14 @@ export default function StakeTable({ address }: StakeTableProps) {
     index: selectedIndex!
   });
   const { data: withdrawData, write: withdrawWrite } = useContractWrite(withdrawConfig);
-  const { isLoading: withdrawIsLoading, isSuccess: withdrawIsSuccessful } = useWaitForTransaction({
+  const { isLoading: withdrawIsLoading } = useWaitForTransaction({
     hash: withdrawData?.hash
   });
 
   // Claim Rewards
   const claimRewardConfig = ClaimRewardPool1PreparedContract();
   const { data: claimRewardsData, write: claimRewardsWrite } = useContractWrite(claimRewardConfig);
-  const { isLoading: claimRewardsIsLoading, isSuccess: claimRewardsIsSuccess } = useWaitForTransaction({
+  const { isLoading: claimRewardsIsLoading } = useWaitForTransaction({
     hash: claimRewardsData?.hash
   });
 
