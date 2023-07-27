@@ -304,7 +304,7 @@ function Pool1() {
                         </Link>
                       </>
                     )}
-                    <ContractAddress />
+                    <ContractAddress address={Pool3ContractAddress}  />
                     <Web3Button />
                     <WalletAddress address={connectedAddress} />
                   </>
