@@ -40,9 +40,7 @@ export type ClaimRewardContractProps = {
 
 export type BalanceProps = {
   ownerAddress: `0x${string}`;
-}
-
-
+};
 
 export let iAI_ContractAddress: `0x${string}` = '0x6dDe4fFD6dB302Bc9a46850f61399e082f6c2122';
 export let NFT_ContractAddress: `0x${string}` = '0x853806fCa5Ee8a6Ac99Dc84a8e3596A4F6541796';

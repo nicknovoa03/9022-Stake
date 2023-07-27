@@ -33,7 +33,7 @@ function Pool1() {
   // User Balance
   const balanceData = ERC20BalanceOf({
     ownerAddress: connectedAddress!
-   });
+  });
 
   // Allowance
   const allowanceData = ERC20Allowance({
