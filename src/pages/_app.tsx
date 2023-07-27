@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <React.Fragment>
       <Head>
         <title>iAI Pools</title>
-        <meta name="description" content="Decentralized Staking Application" />
+        <meta name="description" content="Decentralized Pooling Application" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <WagmiConfig client={wagmiClient}>
