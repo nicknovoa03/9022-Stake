@@ -15,9 +15,9 @@ import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagm
 import {
   ERC20Allowance,
   Pool1ContractAddress,
-  Pool1PreparedContract,
+  PoolPreparedContract,
   Pool1PreparedContractApprove
-} from '../../components/contracts/pool1WagmiContract';
+} from '../../components/contracts/poolWagmiContract';
 
 function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
@@ -52,7 +52,7 @@ function Pool1() {
   });
 
   // Lock
-  const poolConfig = Pool1PreparedContract({
+  const poolConfig = PoolPreparedContract({
     poolAmount: poolAmount
   });
 

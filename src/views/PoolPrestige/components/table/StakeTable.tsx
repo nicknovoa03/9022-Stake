@@ -9,12 +9,12 @@ import { MainButton, StakeCell, StakeTableContainer, WithDrawButton } from '../.
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import {
-  AllPooled1,
-  ClaimRewardPool1PreparedContract,
-  Pool1Balance,
-  Unpool1PreparedContract,
-  WithdrawPool1PreparedContract
-} from '../../../../components/contracts/pool1WagmiContract';
+  AllPooled,
+  ClaimRewardPreparedContract,
+  PoolBalance,
+  UnpoolPreparedContract,
+  WithdrawPositionPreparedContract
+} from '../../../../components/contracts/poolWagmiContract';
 
 type StakeTableProps = {
   address: `0x${string}` | undefined;
@@ -54,7 +54,7 @@ export default function StakeTable({ address }: StakeTableProps) {
 
   // Unstake
   // Unstake
-  const unstakeConfig = Unpool1PreparedContract({
+  const unstakeConfig = UnpoolPreparedContract({
     index: selectedIndex!
   });
 
@@ -65,7 +65,7 @@ export default function StakeTable({ address }: StakeTableProps) {
   });
 
   // Withdraw
-  const withdrawConfig = WithdrawPool1PreparedContract({
+  const withdrawConfig = WithdrawPositionPreparedContract({
     index: selectedIndex!
   });
   const { data: withdrawData, write: withdrawWrite } = useContractWrite(withdrawConfig);
@@ -74,17 +74,17 @@ export default function StakeTable({ address }: StakeTableProps) {
   });
 
   // Claim Rewards
-  const claimRewardConfig = ClaimRewardPool1PreparedContract();
+  const claimRewardConfig = ClaimRewardPreparedContract();
   const { data: claimRewardsData, write: claimRewardsWrite } = useContractWrite(claimRewardConfig);
   const { isLoading: claimRewardsIsLoading } = useWaitForTransaction({
     hash: claimRewardsData?.hash
   });
 
   // Staking balance
-  const stakingBalanceData = Pool1Balance({ ownerAddress: address! }) as BigNumber;
+  const stakingBalanceData = PoolBalance({ ownerAddress: address! }) as BigNumber;
 
   // Staking postions
-  const staked = AllPooled1({ ownerAddress: address });
+  const staked = AllPooled({ ownerAddress: address });
 
   useEffect(() => {
     if (stakingBalanceData) {

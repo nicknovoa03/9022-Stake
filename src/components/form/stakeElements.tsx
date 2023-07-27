@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { AddressLink } from './formElements';
-import { Pool1ContractAddress } from '../contracts/pool1WagmiContract';
-
+import { Pool1ContractAddress } from '../contracts/contractAddresses';
 const blockExplorer = 'https://etherscan.com/address/';
 //const sepoliaExplorer = 'https://sepolia.etherscan.io/address/';
 
