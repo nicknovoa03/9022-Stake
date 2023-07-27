@@ -1,114 +1,113 @@
 import { usePrepareContractWrite, useContractRead } from 'wagmi';
 import { erc20ABI } from 'wagmi';
-import Pool1 from './ABI/iAIPool1.json';
+import Pool from './ABI/iAIPool1.json';
 import {
   ReadPoolContractProps,
   ReadPoolDetailsContractProps,
   PoolContractProps,
   UnpoolingContractProps,
-  erc20ContractAddressApproveProps,
-  AllowanceBalanceProps,
-  iAI_ContractAddress
+  erc20ApproveProps,
+  AllowanceProps,
+  iAI_ContractAddress,
+  ClaimRewardContractProps
 } from './wagmiContracts';
-
-export let Pool1ContractAddress: `0x${string}` = '0xb277B81694369CB690Ad58FbFA68DcFfC80F9d20';
 
 export const testPoolContract: `0x${string}` = '0xd1cc357af989564b251104b671eb6a58bf00dc06';
 
 //Pool1ContractAddress = testPoolContract;
 
 // Approve token for tokenTransfer
-export const Pool1PreparedContractApprove = (props: erc20ContractAddressApproveProps) => {
+export const Pool1PreparedContractApprove = (props: erc20ApproveProps) => {
   const { config } = usePrepareContractWrite({
     address: iAI_ContractAddress,
     abi: erc20ABI,
     functionName: 'approve',
-    args: [Pool1ContractAddress!, props.tokenAmount]
+    args: [props.spenderAddress, props.tokenAmount]
   });
   return config;
 };
 
 // Get Allowance for token owner and spender
-export const ERC20Allowance = (props: AllowanceBalanceProps) => {
+export const ERC20Allowance = (props: AllowanceProps) => {
   const { data } = useContractRead({
     address: iAI_ContractAddress,
     abi: erc20ABI,
     functionName: 'allowance',
-    args: [props.ownerAddress!, Pool1ContractAddress]
+    args: [props.ownerAddress!, props.spenderAddress]
   });
   return data;
 };
 
 // Initiate Stake
-export const Pool1PreparedContract = (props: PoolContractProps) => {
+export const PoolPreparedContract = (props: PoolContractProps) => {
   const { config } = usePrepareContractWrite({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'pool1',
+    address: props.poolAddress,
+    abi: Pool.abi,
+    functionName: 'pool',
     args: [props.poolAmount]
   });
   return config;
 };
 
 // Unstake without penalty
-export const Unpool1PreparedContract = (props: UnpoolingContractProps) => {
+export const UnpoolPreparedContract = (props: UnpoolingContractProps) => {
   const { config } = usePrepareContractWrite({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'unpool1',
+    address: props.poolAddress,
+    abi: Pool.abi,
+    functionName: 'unPool',
     args: [props.index]
   });
   return config;
 };
 
 //Unstake with penalty
-export const WithdrawPool1PreparedContract = (props: UnpoolingContractProps) => {
+export const WithdrawPositionPreparedContract = (props: UnpoolingContractProps) => {
   const { config } = usePrepareContractWrite({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'withdrawPool1',
+    address: props.poolAddress,
+    abi: Pool.abi,
+    functionName: 'withdrawPosition',
     args: [props.index]
   });
   return config;
 };
 
 // Claim Reward
-export const ClaimRewardPool1PreparedContract = () => {
+export const ClaimRewardPreparedContract = (props: ClaimRewardContractProps) => {
   const { config } = usePrepareContractWrite({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'claimRewardPool1'
+    address: props.poolAddress,
+    abi: Pool.abi,
+    functionName: 'claimReward'
   });
   return config;
 };
 
 // Get staking balance for an address
-export const Pool1Balance = (props: ReadPoolContractProps) => {
+export const PoolBalance = (props: ReadPoolContractProps) => {
   const { data } = useContractRead({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'poolingBalance',
+    address: props.poolAddress,
+    abi: Pool.abi,
+    functionName: 'poolPostions',
     args: [props.ownerAddress]
   });
   return data;
 };
 
 // Get staking detials for specifc stake with an index
-export const Pool1Details = (props: ReadPoolDetailsContractProps) => {
+export const PoolDetails = (props: ReadPoolDetailsContractProps) => {
   const { data } = useContractRead({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
-    functionName: 'poolerDetails',
+    address: props.poolAddress,
+    abi: Pool.abi,
+    functionName: 'poolPostionDetails',
     args: [props.ownerAddress, props.index]
   });
   return data;
 };
 
 // Get staking detials for specifc stake with an index
-export const AllPooled1 = (props: ReadPoolContractProps) => {
+export const AllPooled = (props: ReadPoolContractProps) => {
   const { data } = useContractRead({
-    address: Pool1ContractAddress,
-    abi: Pool1.abi,
+    address: props.poolAddress,
+    abi: Pool.abi,
     functionName: 'allPooled',
     args: [props.ownerAddress]
   });
