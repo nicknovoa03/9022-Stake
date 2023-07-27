@@ -17,7 +17,7 @@ export const testPoolContract: `0x${string}` = '0xd1cc357af989564b251104b671eb6a
 //Pool1ContractAddress = testPoolContract;
 
 // Approve token for tokenTransfer
-export const Pool1PreparedContractApprove = (props: erc20ApproveProps) => {
+export const ApprovePoolPreparedContract = (props: erc20ApproveProps) => {
   const { config } = usePrepareContractWrite({
     address: iAI_ContractAddress,
     abi: erc20ABI,

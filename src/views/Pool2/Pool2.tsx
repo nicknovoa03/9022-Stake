@@ -15,7 +15,7 @@ import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagm
 import {
   ERC20Allowance,
   PoolPreparedContract,
-  Pool1PreparedContractApprove
+  ApprovePoolPreparedContract
 } from '../../components/contracts/poolWagmiContract';
 import { Pool2ContractAddress } from '../../components/contracts/contractAddresses';
 
@@ -47,7 +47,7 @@ function Pool2() {
   });
 
   // Approve
-  const approveConfig = Pool1PreparedContractApprove({
+  const approveConfig = ApprovePoolPreparedContract({
     tokenAmount: ethers.utils.parseEther((100000000).toString()),
     spenderAddress: Pool2ContractAddress
   });
