@@ -15,6 +15,7 @@ import {
   UnpoolPreparedContract,
   WithdrawPositionPreparedContract
 } from '../../../../components/contracts/poolWagmiContract';
+import { PoolPrestigeContractAddress } from '../../../../components/contracts/contractAddresses';
 
 type StakeTableProps = {
   address: `0x${string}` | undefined;
@@ -53,9 +54,9 @@ export default function StakeTable({ address }: StakeTableProps) {
   const lockTime = 182;
 
   // Unstake
-  // Unstake
   const unstakeConfig = UnpoolPreparedContract({
-    index: selectedIndex!
+    index: selectedIndex!,
+    poolAddress: PoolPrestigeContractAddress
   });
 
   const { data: unstakeData, write: unstakeWrite } = useContractWrite(unstakeConfig);
@@ -66,7 +67,8 @@ export default function StakeTable({ address }: StakeTableProps) {
 
   // Withdraw
   const withdrawConfig = WithdrawPositionPreparedContract({
-    index: selectedIndex!
+    index: selectedIndex!,
+    poolAddress: PoolPrestigeContractAddress
   });
   const { data: withdrawData, write: withdrawWrite } = useContractWrite(withdrawConfig);
   const { isLoading: withdrawIsLoading } = useWaitForTransaction({
@@ -74,17 +76,23 @@ export default function StakeTable({ address }: StakeTableProps) {
   });
 
   // Claim Rewards
-  const claimRewardConfig = ClaimRewardPreparedContract();
+  const claimRewardConfig = ClaimRewardPreparedContract({ poolAddress: PoolPrestigeContractAddress });
   const { data: claimRewardsData, write: claimRewardsWrite } = useContractWrite(claimRewardConfig);
   const { isLoading: claimRewardsIsLoading } = useWaitForTransaction({
     hash: claimRewardsData?.hash
   });
 
   // Staking balance
-  const stakingBalanceData = PoolBalance({ ownerAddress: address! }) as BigNumber;
+  const stakingBalanceData = PoolBalance({
+    ownerAddress: address!,
+    poolAddress: PoolPrestigeContractAddress
+  }) as BigNumber;
 
   // Staking postions
-  const staked = AllPooled({ ownerAddress: address });
+  const staked = AllPooled({
+    ownerAddress: address,
+    poolAddress: PoolPrestigeContractAddress
+  });
 
   useEffect(() => {
     if (stakingBalanceData) {

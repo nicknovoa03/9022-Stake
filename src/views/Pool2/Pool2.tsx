@@ -14,10 +14,10 @@ import { ContractAddress, WalletAddress } from '../../components/form/stakeEleme
 import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
 import {
   ERC20Allowance,
-  Pool1ContractAddress,
   PoolPreparedContract,
   Pool1PreparedContractApprove
 } from '../../components/contracts/poolWagmiContract';
+import { Pool2ContractAddress } from '../../components/contracts/contractAddresses';
 
 function Pool2() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
@@ -31,19 +31,25 @@ function Pool2() {
   const blockExplorer = 'https://etherscan.com';
 
   // User Balance
-  const balanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
+  const balanceData = ERC20BalanceOf({
+    ownerAddress: connectedAddress!
+  });
 
   // Allowance
   const allowanceData = ERC20Allowance({
-    ownerAddress: connectedAddress
+    ownerAddress: connectedAddress,
+    spenderAddress: Pool2ContractAddress
   });
 
   // Pool Balance
-  const poolBalanceData = ERC20BalanceOf({ ownerAddress: Pool1ContractAddress! });
+  const poolBalanceData = ERC20BalanceOf({
+    ownerAddress: Pool2ContractAddress!
+  });
 
   // Approve
   const approveConfig = Pool1PreparedContractApprove({
-    tokenAmount: ethers.utils.parseEther((100000000).toString())
+    tokenAmount: ethers.utils.parseEther((100000000).toString()),
+    spenderAddress: Pool2ContractAddress
   });
   const { data: approveData, write: writeERC20Approve } = useContractWrite(approveConfig);
 
@@ -53,7 +59,8 @@ function Pool2() {
 
   // Lock
   const poolConfig = PoolPreparedContract({
-    poolAmount: poolAmount
+    poolAmount: poolAmount,
+    poolAddress: Pool2ContractAddress
   });
 
   const { data: poolData, write: stakeWrite } = useContractWrite(poolConfig);
@@ -63,7 +70,9 @@ function Pool2() {
   });
 
   // User erc721Balance
-  const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
+  const NFTBalanceData = ERC721BalanceOf({
+    ownerAddress: connectedAddress!
+  });
 
   useEffect(() => {
     if (balanceData) {
