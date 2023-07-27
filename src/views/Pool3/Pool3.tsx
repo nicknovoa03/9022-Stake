@@ -271,8 +271,13 @@ function Pool1() {
                         {isLoadingERC20Approve ? 'Approving...' : `Approve $iAi`}
                       </MainButton>
                     ) : (
-                      <MainButton fullWidth variant="contained" disabled={!stakeWrite || stakeIsLoading}>
-                        {stakeIsLoading ? 'Locking... ' : `Locking Disabled`}
+                      <MainButton
+                        fullWidth
+                        variant="contained"
+                        disabled={!stakeWrite || stakeIsLoading}
+                        onClick={() => stakeWrite?.()}
+                      >
+                        {stakeIsLoading ? 'Locking... ' : `Lock ${ethers.utils.formatEther(poolAmount)} $iAI`}
                       </MainButton>
                     )}
                     {approveIsSuccessful && (
