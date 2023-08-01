@@ -217,7 +217,7 @@ function Pool1() {
                   <br />
                 </Typography>
                 <Typography fontSize={12} align="center" color="white" data-aos={'flip-left'}>
-                  After successfully locking, simply return to this page to monitor your staked $iAi.
+                  After successfully locking, simply return to this page to monitor your pooled $iAi.
                 </Typography>
               </Box>
               <Box
