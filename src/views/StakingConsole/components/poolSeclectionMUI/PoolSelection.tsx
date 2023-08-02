@@ -12,8 +12,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { BigNumber, ethers } from 'ethers';
-import { ERC20BalanceOf } from '../../../../components/contracts/wagmiContracts';
+import { ERC20BalanceOf, ERC721BalanceOf } from '../../../../components/contracts/wagmiContracts';
 import { useAccount } from 'wagmi';
+import getNFTMetadata from '../../../../components/nfts/NFTMetadata';
+import { nftMetadataDictionary } from '../../../../components/nftData/nftMetadataDictionary';
 
 const pools = [
   {
@@ -85,11 +87,13 @@ const PoolDI = {
   href: '/PoolDI'
 };
 
-const PoolSelection = (ownedNfts: any) => {
+const PoolSelection = () => {
   const theme = useTheme();
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
-  let [nftCount, setNftCount] = useState(0);
+  let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
+  let [nftMetadata, setNFTMetadata] = useState<string[]>([]);
+  let [ownedNfts, setOwnedNfts] = useState<{ [key: string]: number }>({});
   let [prestigeFlag, setPrestigeFlag] = useState<Boolean>(false);
   let [destinationInheritanceFlag, setDestinationInheritanceFlag] = useState<Boolean>(false);
   let { address, isConnected } = useAccount();
@@ -99,6 +103,49 @@ const PoolSelection = (ownedNfts: any) => {
     setConnectedAddress(address);
   }, [isConnected]);
 
+  // set NFT's Owned
+  useEffect(() => {
+    fetchData();
+  }, [connectedAddress]);
+
+  async function fetchData() {
+    const loadNftMetadata = await getNFTMetadata(connectedAddress!);
+    setNFTMetadata(loadNftMetadata);
+  }
+
+  // set NFT background data to state
+  useEffect(() => {
+    matchMetadata();
+  }, [nftMetadata]);
+
+  function matchMetadata() {
+    let nftBackgroundDictionary: { [key: string]: number } = {};
+    for (let i in nftMetadata) {
+      // get nft number
+      let nftNumber = nftMetadata[i];
+      // get background type
+      let nftBackground = nftMetadataDictionary[nftNumber.toString()];
+      let backgroundIdentifier: string;
+      // check background and set identifier
+      if (nftBackground == 'Destination Inheritance') {
+        backgroundIdentifier = 'DI';
+      } else if (nftBackground == 'Basquiat' || nftBackground == 'Warhol') {
+        backgroundIdentifier = 'Prestige';
+      } else {
+        backgroundIdentifier = 'Standard';
+      }
+      // add to dictionary or increment count
+      if (!nftBackgroundDictionary[backgroundIdentifier]) {
+        nftBackgroundDictionary[backgroundIdentifier] = 1;
+      } else {
+        nftBackgroundDictionary[backgroundIdentifier]++;
+      }
+    }
+    //console.log('nft dic:', nftBackgroundDictionary);
+    // set state
+    setOwnedNfts(nftBackgroundDictionary);
+  }
+
   // User erc20 Balance
   const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
   useEffect(() => {
@@ -107,27 +154,30 @@ const PoolSelection = (ownedNfts: any) => {
     }
   });
 
+  // User erc721Balance
+  const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
+  useEffect(() => {
+    if (NFTBalanceData) {
+      setNFTBalanceAmount(NFTBalanceData);
+    }
+  }, [NFTBalanceData]);
+
   // Set NFT data
   useEffect(() => {
-    let sum = 0;
-    let nfts: any = Object.values(ownedNfts)[0];
-    //setNftCount(Object.values(ownedNfts)[0]);
-    //console.log('owned nfts:', nfts);
+    //let nfts: any = Object.values(ownedNfts)[0];
+    //console.log('owned nfts:', ownedNfts);
     //console.log('nft count:', Object.keys(nfts));
-    for (const key in nfts) {
+    for (const key in ownedNfts) {
       if (key == 'Prestige') {
         setPrestigeFlag(true);
       }
       if (key == 'DI') {
         setDestinationInheritanceFlag(true);
       }
-      sum += nfts[key];
     }
-    setNftCount(sum);
-    //console.log('nftCount:', nftCount);
     //console.log('prestige flag:', prestigeFlag);
     //console.log('DI flag:', destinationInheritanceFlag);
-  });
+  }, [ownedNfts]);
 
   return (
     <Grid container spacing={4}>
@@ -157,7 +207,7 @@ const PoolSelection = (ownedNfts: any) => {
 
               <Box marginBottom={2}>
                 <Typography variant={'h5'} align="center" color={theme.palette.common.white}>
-                  {nftCount >= item.nftCountReqs &&
+                  {Number(NFTBalanceAmount) >= item.nftCountReqs &&
                   Number(ethers.utils.formatEther(iAIbalanceAmount)) >= item.iAiTokenReqs ? (
                     <Box
                       component="span"

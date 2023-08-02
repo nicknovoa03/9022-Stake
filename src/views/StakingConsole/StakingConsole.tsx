@@ -10,59 +10,12 @@ import { useAccount } from 'wagmi';
 import Container from '../../components/Container';
 import PoolSelection from './components/poolSeclectionMUI/PoolSelection';
 import { ERC20BalanceOf, ERC721BalanceOf } from '../../components/contracts/wagmiContracts';
-import getNFTMetadata from '../../components/nfts/NFTMetadata';
-import { nftMetadataDictionary } from '../../components/nftData/nftMetadataDictionary';
 
 function StakingConsole() {
   let [connectedAddress, setConnectedAddress] = useState<`0x${string}` | undefined>();
   let [iAIbalanceAmount, setiAIBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
   let [NFTBalanceAmount, setNFTBalanceAmount] = useState<BigNumber>(BigNumber.from(0));
-  let [nftMetadata, setNFTMetadata] = useState<string[]>([]);
-  let [ownedNfts, setOwnedNfts] = useState<{ [key: string]: number }>({});
   let { address, isConnected } = useAccount();
-
-  // set NFT's Owned
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  async function fetchData() {
-    const loadNftMetadata = await getNFTMetadata(connectedAddress!);
-    setNFTMetadata(loadNftMetadata);
-  }
-
-  // set NFT background data to state
-  useEffect(() => {
-    matchMetadata();
-  }, [nftMetadata]);
-
-  function matchMetadata() {
-    //console.log('loaded nft metadata:', nftMetadata);
-    let nftBackgroundDictionary: { [key: string]: number } = {};
-    for (let i in nftMetadata) {
-      // get nft number
-      let nftNumber = nftMetadata[i];
-      // get background type
-      let nftBackground = nftMetadataDictionary[nftNumber.toString()];
-      let backgroundIdentifier: string;
-      // check background and set identifier
-      if (nftBackground == 'Destination Inheritance') {
-        backgroundIdentifier = 'DI';
-      } else if (nftBackground == 'Basquiat' || nftBackground == 'Warhol') {
-        backgroundIdentifier = 'Prestige';
-      } else {
-        backgroundIdentifier = 'Standard';
-      }
-      // add to dictionary or increment count
-      if (!nftBackgroundDictionary[backgroundIdentifier]) {
-        nftBackgroundDictionary[backgroundIdentifier] = 1;
-      } else {
-        nftBackgroundDictionary[backgroundIdentifier]++;
-      }
-    }
-    // set state
-    setOwnedNfts(nftBackgroundDictionary);
-  }
 
   // User erc20 Balance
   const iAIBalanceData = ERC20BalanceOf({ ownerAddress: connectedAddress! });
@@ -211,7 +164,7 @@ function StakingConsole() {
               </Typography>
             </Box>
             <Box>
-              <PoolSelection ownedNfts={ownedNfts} connectedAddress={address!} />
+              <PoolSelection />
             </Box>
           </Box>
         </Container>
