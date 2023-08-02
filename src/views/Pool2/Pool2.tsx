@@ -192,8 +192,8 @@ function Pool2() {
                   Ambassador Lock Information:
                 </Typography>
                 <Typography fontSize={12} align="left" color="white" data-aos={'flip-left'}>
-                  To stake your $iAi, connect your wallet to our locking dapp here, sign the transaction and confirm it in
-                  your wallet.
+                  To stake your $iAi, connect your wallet to our locking dapp here, sign the transaction and confirm it
+                  in your wallet.
                   <br />
                   <br />
                 </Typography>
