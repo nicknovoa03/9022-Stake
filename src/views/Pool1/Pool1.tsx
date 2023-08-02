@@ -192,7 +192,7 @@ function Pool1() {
                   Ambassador Lock Information:
                 </Typography>
                 <Typography fontSize={12} align="left" color="white" data-aos={'flip-left'}>
-                  To stake your $iAi, connect your wall to our locking dapp here, sign the transaction and confirm it in
+                  To stake your $iAi, connect your wallet to our locking dapp here, sign the transaction and confirm it in
                   your wallet.
                   <br />
                   <br />
@@ -210,7 +210,7 @@ function Pool1() {
                   <br /> - THRESHOLD iAI Wallet balance: 10,000 iAI Tokens
                   <br /> - Minimum 9022 NFTs Required: 1
                   <br /> - YEARLY Distribution on iAI THRESHOLD: 2%
-                  <br /> - 90 day locking period
+                  <br /> - 180 day locking period
                   <br />
                   <br />{' '}
                 </Typography>
