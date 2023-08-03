@@ -108,8 +108,8 @@ function Pool2() {
   const handleStakeChange = (event: { target: { value: any } }) => {
     const { value } = event.target;
     if (isPositiveFloat(value)) {
-      const stakeAmount = ethers.utils.parseEther(value);
-      setPoolAmount(stakeAmount);
+      const poolAmount = ethers.utils.parseEther(value);
+      setPoolAmount(poolAmount);
     } else {
       setPoolAmount(ethers.BigNumber.from(0));
     }

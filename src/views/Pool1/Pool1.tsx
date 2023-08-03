@@ -105,17 +105,16 @@ function Pool1() {
     setConnectedAddress(address);
   }, [isConnected]);
 
-  const handleStakeChange = (event: { target: { value: any } }) => {
+  const handleStakeChange = (event: { target: { value: string } }) => {
     const { value } = event.target;
     if (isPositiveFloat(value)) {
-      const stakeAmount = ethers.utils.parseEther(value);
-      setPoolAmount(stakeAmount);
+      setPoolAmount(ethers.utils.parseEther(value));
     } else {
       setPoolAmount(ethers.BigNumber.from(0));
     }
   };
 
-  function isPositiveFloat(value: any) {
+  function isPositiveFloat(value: string) {
     return /^\d+(\.\d+)?$/.test(value) && Number(value) >= 1;
   }
 
