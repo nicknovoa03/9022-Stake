@@ -50,8 +50,8 @@ export default function StakeTable({ address }: StakeTableProps) {
     return { id, startDate, amount, reward, penalty, endDate, stakeComplete };
   }
   const penalty = 25;
-  const reward = 2;
-  const lockTime = 182;
+  const reward = 10;
+  const lockTime = 365;
 
   // Unstake
   const unstakeConfig = UnpoolPreparedContract({
