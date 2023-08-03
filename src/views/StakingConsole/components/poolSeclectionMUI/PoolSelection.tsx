@@ -152,7 +152,7 @@ const PoolSelection = () => {
     if (iAIBalanceData) {
       setiAIBalanceAmount(iAIBalanceData);
     }
-  });
+  },[]);
 
   // User erc721Balance
   const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
