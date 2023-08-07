@@ -25,7 +25,7 @@ const pools = [
       'Minimum 9022 NFTs Required: 1',
       'YEARLY Distribution on iAI THRESHOLD: 2%'
     ],
-    iAiTokenReqs: 10000,
+    iAiTokenReqs: 10,
     nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
     nftCountReqs: 1,
     size: 4,
@@ -152,7 +152,7 @@ const PoolSelection = () => {
     if (iAIBalanceData) {
       setiAIBalanceAmount(iAIBalanceData);
     }
-  }, []);
+  }, [iAIBalanceData]);
 
   // User erc721Balance
   const NFTBalanceData = ERC721BalanceOf({ ownerAddress: connectedAddress! });
