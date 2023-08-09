@@ -93,7 +93,7 @@ function Pool1() {
     if (poolBalanceData) {
       setPoolBalance(ethers.utils.formatEther(poolBalanceData));
     }
-  }, []);
+  }, [poolBalanceData]);
 
   useEffect(() => {
     if (NFTBalanceData) {
