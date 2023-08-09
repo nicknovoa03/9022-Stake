@@ -172,6 +172,7 @@ const PoolSelection = () => {
         setPrestigeFlag(true);
       }
       if (key == 'DI') {
+        setPrestigeFlag(true);
         setDestinationInheritanceFlag(true);
       }
     }
