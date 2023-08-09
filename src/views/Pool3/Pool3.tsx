@@ -210,7 +210,7 @@ function Pool1() {
                   <br /> - THRESHOLD iAI Wallet balance: 100,000 iAI Tokens
                   <br /> - Minimum 9022 NFTs Required: 3-10%
                   <br /> - YEARLY Distribution on iAI THRESHOLD: 5.5%
-                  <br /> - .05% will be added to the total distribution for each NFT held after 3.Max 9% tHE iAI
+                  <br /> - .5% will be added to the total distribution for each NFT held after 3.Max 9% tHE iAI
                   THRESHOLD
                   <br /> - 180 Day locking period
                   <br />
