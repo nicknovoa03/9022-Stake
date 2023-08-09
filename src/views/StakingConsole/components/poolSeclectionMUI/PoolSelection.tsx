@@ -68,7 +68,6 @@ const prestigePool = {
   ],
   iAiTokenReqs: 200000,
   nftBackgroundReqs: ['DI', 'Prestige'],
-  nftCountReqs: 1,
   size: 6,
   href: '/PoolPrestige'
 };
@@ -82,7 +81,6 @@ const PoolDI = {
   ],
   iAiTokenReqs: 300000,
   nftBackgroundReqs: ['DI'],
-  nftCountReqs: 1,
   size: 6,
   href: '/PoolDI'
 };
@@ -171,14 +169,14 @@ const PoolSelection = () => {
       if (key == 'Prestige') {
         setPrestigeFlag(true);
       }
-      if (key == 'DI') {
+      else if (key == 'DI') {
         setPrestigeFlag(true);
         setDestinationInheritanceFlag(true);
       }
     }
     //console.log('prestige flag:', prestigeFlag);
     //console.log('DI flag:', destinationInheritanceFlag);
-  }, [ownedNfts]);
+  }, [ownedNfts, nftMetadata]);
 
   return (
     <Grid container spacing={4}>
