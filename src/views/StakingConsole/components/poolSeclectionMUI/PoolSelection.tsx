@@ -26,7 +26,6 @@ const pools = [
       'YEARLY Distribution on iAI THRESHOLD: 2%'
     ],
     iAiTokenReqs: 10,
-    nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
     nftCountReqs: 1,
     size: 4,
     href: '/Pool1'
@@ -39,7 +38,6 @@ const pools = [
       'YEARLY Distribution on iAI THRESHOLD: 4%'
     ],
     iAiTokenReqs: 30000,
-    nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
     nftCountReqs: 1,
     size: 4,
     href: '/Pool2'
@@ -53,7 +51,6 @@ const pools = [
       '.5% will be added to the total distribution for each NFT held >3. Max 9% iAI THRESHOLD'
     ],
     iAiTokenReqs: 100000,
-    nftBackgroundReqs: ['Standard', 'DI', 'Prestige'],
     nftCountReqs: 3,
     size: 4,
     href: '/Pool3'
@@ -67,7 +64,6 @@ const prestigePool = {
     'YEARLY Distribution on iAI THRESHOLD: 10%'
   ],
   iAiTokenReqs: 200000,
-  nftBackgroundReqs: ['DI', 'Prestige'],
   size: 6,
   href: '/PoolPrestige'
 };
@@ -80,7 +76,6 @@ const PoolDI = {
     'YEARLY Distribution on iAI THRESHOLD: 12%'
   ],
   iAiTokenReqs: 300000,
-  nftBackgroundReqs: ['DI'],
   size: 6,
   href: '/PoolDI'
 };
@@ -168,8 +163,7 @@ const PoolSelection = () => {
     for (const key in ownedNfts) {
       if (key == 'Prestige') {
         setPrestigeFlag(true);
-      }
-      else if (key == 'DI') {
+      } else if (key == 'DI') {
         setPrestigeFlag(true);
         setDestinationInheritanceFlag(true);
       }
