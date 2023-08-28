@@ -18,6 +18,7 @@ import {
   ApprovePoolPreparedContract
 } from '../../components/contracts/poolWagmiContract';
 import { PoolPrestigeContractAddress } from '../../components/contracts/contractAddresses';
+import { parseEther } from 'viem';
 
 function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
@@ -48,7 +49,7 @@ function Pool1() {
 
   // Approve
   const approveConfig = ApprovePoolPreparedContract({
-    tokenAmount: ethers.utils.parseEther((100000000).toString()),
+    tokenAmount: parseEther((100000000).toString()),
     spenderAddress: PoolPrestigeContractAddress
   });
   const { data: approveData, write: writeERC20Approve } = useContractWrite(approveConfig);
@@ -93,7 +94,7 @@ function Pool1() {
     if (poolBalanceData) {
       setPoolBalance(ethers.utils.formatEther(poolBalanceData));
     }
-  }, []);
+  }, [poolBalanceData]);
 
   useEffect(() => {
     if (NFTBalanceData) {

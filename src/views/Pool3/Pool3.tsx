@@ -18,6 +18,8 @@ import {
   ApprovePoolPreparedContract
 } from '../../components/contracts/poolWagmiContract';
 import { Pool3ContractAddress } from '../../components/contracts/contractAddresses';
+import { parseEther } from 'viem';
+
 
 function Pool1() {
   let [poolBalance, setPoolBalance] = useState<String>('0');
@@ -48,7 +50,7 @@ function Pool1() {
 
   // Approve
   const approveConfig = ApprovePoolPreparedContract({
-    tokenAmount: ethers.utils.parseEther((100000000).toString()),
+    tokenAmount: parseEther((100000000).toString()),
     spenderAddress: Pool3ContractAddress
   });
   const { data: approveData, write: writeERC20Approve } = useContractWrite(approveConfig);
@@ -93,7 +95,7 @@ function Pool1() {
     if (poolBalanceData) {
       setPoolBalance(ethers.utils.formatEther(poolBalanceData));
     }
-  }, []);
+  }, [poolBalanceData]);
 
   useEffect(() => {
     if (NFTBalanceData) {
@@ -210,8 +212,7 @@ function Pool1() {
                   <br /> - THRESHOLD iAI Wallet balance: 100,000 iAI Tokens
                   <br /> - Minimum 9022 NFTs Required: 3-10%
                   <br /> - YEARLY Distribution on iAI THRESHOLD: 5.5%
-                  <br /> - .05% will be added to the total distribution for each NFT held after 3.Max 9% tHE iAI
-                  THRESHOLD
+                  <br /> - .5% will be added to the total distribution for each NFT held after 3. Max 9% iAI THRESHOLD
                   <br /> - 180 Day locking period
                   <br />
                   <br />

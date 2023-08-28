@@ -21,7 +21,7 @@ export type AllowanceProps = {
 
 export type erc20ApproveProps = {
   spenderAddress: `0x${string}`;
-  tokenAmount: BigNumber;
+  tokenAmount: bigint;
 };
 
 export type PoolContractProps = {
