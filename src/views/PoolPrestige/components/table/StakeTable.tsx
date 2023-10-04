@@ -112,8 +112,8 @@ export default function StakeTable({ address }: StakeTableProps) {
         // Convert the `amount` value from Wei to Ether
         let amount = ethers.utils.formatEther(staked[i].amount);
         // Convert the timestamp value to a JavaScript Date object for the start and end dates
-        let startDate = new Date(staked[i].timestamp.toNumber() * 1000);
-        let endDate = new Date(staked[i].timestamp.toNumber() * 1000);
+        let startDate = new Date(Number(staked[i].timestamp) * 1000);
+        let endDate = new Date(Number(staked[i].timestamp) * 1000);
         // Add 30 days to the end date
         endDate.setDate(endDate.getDate() + lockTime);
         // check if end date is passed the current datez
